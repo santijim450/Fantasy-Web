@@ -4,16 +4,22 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import Salon from './pages/Salon';
 import Mesas from './pages/Mesas';
+import Servicios from './pages/Servicios';
+import Contacto from './pages/Contacto';
 
 function App() {
   return (
     <Router>
       <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/salon" element={<Salon />} />
-        <Route path="/mesas" element={<Mesas />} />
-      </Routes>
+        <main className="main-content">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/salon" element={<Salon />} />
+            <Route path="/servicios" element={<Servicios />} />
+            <Route path="/colecciones" element={<Mesas />} />
+            <Route path="/contacto" element={<Contacto />} />
+          </Routes>
+        </main>
       <Footer />
     </Router>
   );

@@ -27,8 +27,6 @@ function Header() {
           </li>
           <li>
             <Link to="/salon" className={`nav-link ${location.pathname === '/salon' ? 'active' : ''}`}>
-              El Salón
-            </Link>
           </li>
           <li>
             <Link to="/mesas" className={`nav-link ${location.pathname === '/mesas' ? 'active' : ''}`}>

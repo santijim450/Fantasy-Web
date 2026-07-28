@@ -34,9 +34,21 @@ function Home() {
             El escenario perfecto para bodas de ensueño, aniversarios y eventos de alto nivel en un jardín espectacular.
           </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
-            <Link to="/mesas" className="btn btn-primary hover-scale">Cotizar Evento</Link>
-            <Link to="/salon" className="btn btn-outline hover-scale">Visita Virtual</Link>
+            <Link to="/colecciones" className="btn btn-primary hover-scale">Explorar Colecciones</Link>
+            <Link to="/salon" className="btn btn-outline hover-scale">Conocer el Recinto</Link>
           </div>
+        </div>
+      </section>
+
+      {/* Introducción / Bienvenidos */}
+      <section style={{ padding: '6rem 2rem', backgroundColor: 'var(--color-surface)' }}>
+        <div className="container text-center">
+          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '2.5rem', color: 'var(--color-primary-dark)', marginBottom: '1rem' }}>
+            Un Oasis de Lujo para tus Momentos Inolvidables
+          </h2>
+          <p style={{ color: 'var(--color-text)', fontSize: '1.2rem', maxWidth: '800px', margin: '0 auto', lineHeight: '1.8' }}>
+            Fantasy Jardín de Eventos no es solo un lugar, es el lienzo donde se pintan los mejores recuerdos de tu vida. Rodeado de naturaleza vibrante, arquitectura clásica y un servicio de guante blanco, transformamos tus celebraciones en experiencias verdaderamente magistrales.
+          </p>
         </div>
       </section>
 
@@ -94,34 +106,39 @@ function Home() {
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* Pilares de Excelencia (Teasers) */}
       <section style={{ padding: '6rem 2rem', backgroundColor: 'var(--color-surface)' }}>
         <div className="container">
           <div className="text-center" style={{ marginBottom: '4rem' }}>
-            <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '2.5rem', color: 'var(--color-primary-dark)', marginBottom: '1rem' }}>Servicios de Autor</h2>
+            <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '2.5rem', color: 'var(--color-primary-dark)', marginBottom: '1rem' }}>Pilares de Excelencia</h2>
             <p style={{ color: 'var(--color-text-muted)', maxWidth: '600px', margin: '0 auto', fontSize: '1.1rem' }}>
-              Nos encargamos de cada detalle con la máxima sofisticación y excelencia.
+              Cada detalle de nuestro jardín está pensado para deslumbrar.
             </p>
           </div>
           
           <div className="grid" style={{ gap: '3rem' }}>
-            <div className="card text-center hover-scale" style={{ padding: '3rem 2rem', border: '1px solid var(--color-accent)' }}>
-              <div style={{ fontSize: '2.5rem', marginBottom: '1.5rem', color: 'var(--color-gold)' }}>✨</div>
-              <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', marginBottom: '1rem' }}>Banquetes de Alta Cocina</h3>
-              <p style={{ color: 'var(--color-text-muted)' }}>Menús diseñados por chefs reconocidos, ofreciendo una experiencia gastronómica inigualable a tus invitados.</p>
+            
+            <div className="card text-center hover-scale" style={{ padding: '3rem 2rem', border: '1px solid var(--color-accent)', display: 'flex', flexDirection: 'column' }}>
+              <div style={{ fontSize: '2.5rem', marginBottom: '1.5rem', color: 'var(--color-gold)' }}>🏛️</div>
+              <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', marginBottom: '1rem' }}>Espacios Versátiles</h3>
+              <p style={{ color: 'var(--color-text-muted)', flex: 1, marginBottom: '2rem' }}>Desde ceremonias íntimas hasta majestuosas recepciones al aire libre en nuestro espléndido jardín.</p>
+              <Link to="/salon" className="btn btn-outline hover-scale" style={{ alignSelf: 'center' }}>Ver Recinto</Link>
             </div>
             
-            <div className="card text-center hover-scale" style={{ padding: '3rem 2rem', border: '1px solid var(--color-accent)' }}>
-              <div style={{ fontSize: '2.5rem', marginBottom: '1.5rem', color: 'var(--color-gold)' }}>🌿</div>
-              <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', marginBottom: '1rem' }}>Jardines Exclusivos</h3>
-              <p style={{ color: 'var(--color-text-muted)' }}>Amplias áreas verdes con iluminación arquitectónica, perfectas para recepciones nocturnas al aire libre.</p>
+            <div className="card text-center hover-scale" style={{ padding: '3rem 2rem', border: '1px solid var(--color-accent)', display: 'flex', flexDirection: 'column' }}>
+              <div style={{ fontSize: '2.5rem', marginBottom: '1.5rem', color: 'var(--color-gold)' }}>🍽️</div>
+              <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', marginBottom: '1rem' }}>Alta Gastronomía</h3>
+              <p style={{ color: 'var(--color-text-muted)', flex: 1, marginBottom: '2rem' }}>Menús de autor, mixología y atención de primera clase para cautivar a los paladares más exigentes.</p>
+              <Link to="/servicios" className="btn btn-outline hover-scale" style={{ alignSelf: 'center' }}>Ver Servicios</Link>
             </div>
             
-            <div className="card text-center hover-scale" style={{ padding: '3rem 2rem', border: '1px solid var(--color-accent)' }}>
-              <div style={{ fontSize: '2.5rem', marginBottom: '1.5rem', color: 'var(--color-gold)' }}>🥂</div>
-              <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', marginBottom: '1rem' }}>Atención Personalizada</h3>
-              <p style={{ color: 'var(--color-text-muted)' }}>Coordinadores de eventos dedicados para asegurar que tu día especial transcurra con absoluta perfección.</p>
+            <div className="card text-center hover-scale" style={{ padding: '3rem 2rem', border: '1px solid var(--color-accent)', display: 'flex', flexDirection: 'column' }}>
+              <div style={{ fontSize: '2.5rem', marginBottom: '1.5rem', color: 'var(--color-gold)' }}>💎</div>
+              <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', marginBottom: '1rem' }}>Diseño a la Medida</h3>
+              <p style={{ color: 'var(--color-text-muted)', flex: 1, marginBottom: '2rem' }}>Colecciones exclusivas que se adaptan a la magnitud de tus sueños y necesidades.</p>
+              <Link to="/colecciones" className="btn btn-primary hover-scale" style={{ alignSelf: 'center' }}>Ver Colecciones</Link>
             </div>
+            
           </div>
         </div>
       </section>
