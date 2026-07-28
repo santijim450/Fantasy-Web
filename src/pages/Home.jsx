@@ -1,4 +1,10 @@
 import { Link } from 'react-router-dom';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/effect-fade';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper/modules';
 
 function Home() {
   return (
@@ -44,40 +50,47 @@ function Home() {
             Recorre nuestros exclusivos rincones diseñados para hacer de tu recepción una experiencia verdaderamente inolvidable.
           </p>
 
-          <div style={{ 
-            display: 'flex', 
-            overflowX: 'auto', 
-            gap: '2rem', 
-            scrollSnapType: 'x mandatory', 
-            paddingBottom: '2rem',
-            scrollbarWidth: 'none', /* Firefox */
-            msOverflowStyle: 'none'  /* IE and Edge */
-          }}>
-            {[
-              "https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-              "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-              "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-              "https://images.unsplash.com/photo-1523438885200-e635ba2c371e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-            ].map((src, idx) => (
-              <img 
-                key={idx}
-                src={src} 
-                alt={`Vista del jardín ${idx + 1}`}
-                style={{
-                  flex: '0 0 85%',
-                  height: '60vh',
-                  minHeight: '400px',
-                  objectFit: 'cover',
-                  scrollSnapAlign: 'center',
-                  borderRadius: '2px',
-                  boxShadow: 'var(--shadow-md)'
-                }}
-              />
-            ))}
+          <div style={{ paddingBottom: '2rem', maxWidth: '1000px', margin: '0 auto' }}>
+            <Swiper
+              modules={[Autoplay, EffectFade, Navigation, Pagination]}
+              effect={'fade'}
+              spaceBetween={30}
+              slidesPerView={1}
+              navigation
+              pagination={{ clickable: true }}
+              autoplay={{
+                delay: 4000,
+                disableOnInteraction: false,
+              }}
+              style={{
+                '--swiper-navigation-color': 'var(--color-gold)',
+                '--swiper-pagination-color': 'var(--color-gold)',
+                borderRadius: '8px',
+                boxShadow: 'var(--shadow-lg)'
+              }}
+            >
+              {[
+                "https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80",
+                "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80",
+                "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80",
+                "https://images.unsplash.com/photo-1523438885200-e635ba2c371e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80"
+              ].map((src, idx) => (
+                <SwiperSlide key={idx}>
+                  <img 
+                    src={src} 
+                    alt={`Vista del jardín ${idx + 1}`}
+                    style={{
+                      width: '100%',
+                      height: '60vh',
+                      minHeight: '450px',
+                      objectFit: 'cover',
+                      display: 'block'
+                    }}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
           </div>
-          <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', marginTop: '1rem', fontStyle: 'italic' }}>
-            Desliza para ver más fotografías
-          </p>
         </div>
       </section>
 
