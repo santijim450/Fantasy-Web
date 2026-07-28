@@ -27,10 +27,22 @@ function Header() {
           </li>
           <li>
             <Link to="/salon" className={`nav-link ${location.pathname === '/salon' ? 'active' : ''}`}>
+              El Recinto
+            </Link>
           </li>
           <li>
-            <Link to="/mesas" className={`nav-link ${location.pathname === '/mesas' ? 'active' : ''}`}>
-              Mesas y Paquetes
+            <Link to="/servicios" className={`nav-link ${location.pathname === '/servicios' ? 'active' : ''}`}>
+              Servicios
+            </Link>
+          </li>
+          <li>
+            <Link to="/colecciones" className={`nav-link ${location.pathname === '/colecciones' ? 'active' : ''}`}>
+              Colecciones
+            </Link>
+          </li>
+          <li>
+            <Link to="/contacto" className="btn btn-primary" style={{ padding: '8px 20px', marginLeft: '10px' }}>
+              Contacto
             </Link>
           </li>
         </ul>
