@@ -1,42 +1,40 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@400;600;800&display=swap');
 
 :root {
-  /* Premium Vibrant Color Palette */
-  --color-primary: #ec4899;      /* Rosa mexicano */
-  --color-primary-dark: #be185d;
-  --color-secondary: #3b82f6;    /* Azul mexicano */
-  --color-accent: #eab308;       /* Amarillo mexicano */
-  --color-success: #10b981;      /* Verde mexicano */
-  --color-warning: #f97316;      /* Naranja mexicano */
+  /* Elegant Garden Color Palette */
+  --color-primary: #1b4332;      /* Verde Esmeralda Profundo (Jardín) */
+  --color-primary-dark: #081c15;
+  --color-secondary: #d4af37;    /* Dorado Clásico / Champagne */
+  --color-accent: #f2e8cf;       /* Marfil / Ivory */
   
   /* Neutral & Dark */
-  --color-bg: #f8fafc;           /* Fondo muy suave */
+  --color-bg: #faf9f6;           /* Blanco Roto muy sutil */
   --color-surface: #ffffff;
-  --color-text: #1e293b;
-  --color-text-muted: #64748b;
-  --color-dark: #0f172a;         /* Marino / Deep */
+  --color-text: #2d3748;         /* Gris oscuro/Carbón (Textos largos) */
+  --color-text-muted: #718096;
+  --color-dark: #1a202c;         
   --color-gold: #d4af37;
 
   /* Typography */
-  --font-sans: 'Inter', system-ui, sans-serif;
-  --font-heading: 'Montserrat', sans-serif;
+  --font-sans: 'Inter', system-ui, sans-serif; /* Más ligera y espaciada */
+  --font-heading: 'Playfair Display', serif;   /* Elegancia absoluta para títulos */
   --font-serif: 'Playfair Display', serif;
 
   /* Layout & Spacing */
-  --radius-sm: 8px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
   --radius-full: 9999px;
   
-  /* Shadows & Glassmorphism */
-  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-  --shadow-glow: 0 0 20px rgba(236, 72, 153, 0.4);
+  /* Shadows & Glassmorphism (Mucho más sutiles) */
+  --shadow-sm: 0 4px 10px -1px rgba(0, 0, 0, 0.03);
+  --shadow-md: 0 10px 20px -3px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 20px 40px -5px rgba(27, 67, 50, 0.08);
+  --shadow-glow: 0 0 20px rgba(212, 175, 55, 0.3);
   
-  --glass-bg: rgba(255, 255, 255, 0.85);
-  --glass-border: 1px solid rgba(255, 255, 255, 0.3);
-  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+  --glass-bg: rgba(255, 255, 255, 0.95);
+  --glass-border: 1px solid rgba(212, 175, 55, 0.2); /* Borde dorado tenue */
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.04);
 }
 
 /* Reset & Base Styles */
@@ -101,65 +99,80 @@ img {
   padding: 2rem;
 }
 
-/* Premium Buttons */
+/* Premium Buttons (Estilo Lujo Clásico) */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 12px 28px;
+  padding: 14px 32px;
   font-family: var(--font-sans);
-  font-weight: 600;
-  font-size: 1rem;
-  border-radius: var(--radius-full);
+  font-weight: 400;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  border-radius: 0; /* Botones cuadrados y clásicos */
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s ease;
   border: none;
   outline: none;
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
-  color: white;
-  box-shadow: var(--shadow-md);
+  background: var(--color-primary);
+  color: var(--color-accent);
+  border: 1px solid var(--color-primary);
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-glow);
+  background: var(--color-primary-dark);
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
 }
 
 .btn-outline {
   background: transparent;
   color: var(--color-primary);
-  border: 2px solid var(--color-primary);
+  border: 1px solid var(--color-primary);
 }
 
 .btn-outline:hover {
   background: var(--color-primary);
-  color: white;
-  transform: translateY(-2px);
+  color: var(--color-accent);
+  transform: translateY(-1px);
 }
 
-/* Micro Animations */
+/* Micro Animations - Más lentas y refinadas */
 .hover-scale {
-  transition: transform 0.3s ease;
+  transition: transform 0.6s ease;
 }
 .hover-scale:hover {
-  transform: scale(1.03);
+  transform: scale(1.015);
 }
 
 /* Hero Section Base */
 .hero-base {
   position: relative;
-  min-height: 80vh;
+  min-height: 85vh;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
   text-align: center;
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
+  overflow: hidden;
+}
+
+.hero-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translateX(-50%) translateY(-50%);
+  z-index: 0;
+  object-fit: cover;
 }
 
 .hero-base::before {
@@ -169,7 +182,7 @@ img {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 58, 138, 0.8) 100%);
+  background: linear-gradient(135deg, rgba(27, 67, 50, 0.6) 0%, rgba(8, 28, 21, 0.8) 100%);
   z-index: 1;
 }
 
@@ -274,9 +287,9 @@ img {
 
 /* Footer */
 .footer {
-  background-color: var(--color-dark);
-  color: white;
-  padding: 60px 0 20px;
+  background-color: var(--color-primary-dark);
+  color: var(--color-accent);
+  padding: 80px 0 30px;
 }
 
 .footer-grid {

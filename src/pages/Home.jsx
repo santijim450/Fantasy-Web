@@ -21,36 +21,93 @@ function Home() {
         </video>
 
         <div className="hero-content">
-          <h1 className="hero-title" style={{ fontSize: '4.5rem', textTransform: 'uppercase', letterSpacing: '2px' }}>
-            Get into the new
+          <h1 className="hero-title" style={{ fontSize: '4.5rem', fontFamily: 'var(--font-heading)', textTransform: 'uppercase', letterSpacing: '2px' }}>
+            Donde la Naturaleza y la Elegancia se Encuentran
           </h1>
-          <p className="hero-subtitle" style={{ fontSize: '1.5rem', fontWeight: '300' }}>
-            Descubre la magia de tus eventos en el salón más exclusivo. 
-            Paquetes infantiles, sociales y empresariales.
+          <p className="hero-subtitle" style={{ fontSize: '1.2rem', fontWeight: '300', fontStyle: 'italic', letterSpacing: '1px' }}>
+            El escenario perfecto para bodas de ensueño, aniversarios y eventos de alto nivel en un jardín espectacular.
           </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
-            <Link to="/salon" className="btn btn-primary">Conoce el Salón</Link>
-            <Link to="/mesas" className="btn btn-outline" style={{ color: 'white', borderColor: 'white' }}>Ver Paquetes</Link>
+            <Link to="/mesas" className="btn btn-primary hover-scale">Cotizar Evento</Link>
+            <Link to="/salon" className="btn btn-outline hover-scale">Visita Virtual</Link>
           </div>
         </div>
       </section>
 
-      {/* Highlights Section */}
-      <section className="section">
+      {/* Galería / Carrusel de Imágenes */}
+      <section style={{ padding: '6rem 2rem', backgroundColor: 'var(--color-bg)' }}>
+        <div className="container text-center">
+          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '2.5rem', marginBottom: '1rem', color: 'var(--color-primary-dark)' }}>
+            Descubre la Majestuosidad
+          </h2>
+          <p style={{ color: 'var(--color-text-muted)', marginBottom: '3rem', maxWidth: '600px', margin: '0 auto 4rem auto', fontSize: '1.1rem' }}>
+            Recorre nuestros exclusivos rincones diseñados para hacer de tu recepción una experiencia verdaderamente inolvidable.
+          </p>
+
+          <div style={{ 
+            display: 'flex', 
+            overflowX: 'auto', 
+            gap: '2rem', 
+            scrollSnapType: 'x mandatory', 
+            paddingBottom: '2rem',
+            scrollbarWidth: 'none', /* Firefox */
+            msOverflowStyle: 'none'  /* IE and Edge */
+          }}>
+            {[
+              "https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+              "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+              "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+              "https://images.unsplash.com/photo-1523438885200-e635ba2c371e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+            ].map((src, idx) => (
+              <img 
+                key={idx}
+                src={src} 
+                alt={`Vista del jardín ${idx + 1}`}
+                style={{
+                  flex: '0 0 85%',
+                  height: '60vh',
+                  minHeight: '400px',
+                  objectFit: 'cover',
+                  scrollSnapAlign: 'center',
+                  borderRadius: '2px',
+                  boxShadow: 'var(--shadow-md)'
+                }}
+              />
+            ))}
+          </div>
+          <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', marginTop: '1rem', fontStyle: 'italic' }}>
+            Desliza para ver más fotografías
+          </p>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section style={{ padding: '6rem 2rem', backgroundColor: 'var(--color-surface)' }}>
         <div className="container">
-          <h2 className="text-center" style={{ marginBottom: '3rem', fontSize: '2.5rem' }}>¿Por qué elegirnos?</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
-            <div className="glass-panel hover-scale">
-              <h3 style={{ color: 'var(--color-primary)' }}>🎈 Espacios Mágicos</h3>
-              <p>Instalaciones de primera calidad diseñadas para la diversión y comodidad de todos tus invitados, grandes y pequeños.</p>
+          <div className="text-center" style={{ marginBottom: '4rem' }}>
+            <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '2.5rem', color: 'var(--color-primary-dark)', marginBottom: '1rem' }}>Servicios de Autor</h2>
+            <p style={{ color: 'var(--color-text-muted)', maxWidth: '600px', margin: '0 auto', fontSize: '1.1rem' }}>
+              Nos encargamos de cada detalle con la máxima sofisticación y excelencia.
+            </p>
+          </div>
+          
+          <div className="grid" style={{ gap: '3rem' }}>
+            <div className="card text-center hover-scale" style={{ padding: '3rem 2rem', border: '1px solid var(--color-accent)' }}>
+              <div style={{ fontSize: '2.5rem', marginBottom: '1.5rem', color: 'var(--color-gold)' }}>✨</div>
+              <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', marginBottom: '1rem' }}>Banquetes de Alta Cocina</h3>
+              <p style={{ color: 'var(--color-text-muted)' }}>Menús diseñados por chefs reconocidos, ofreciendo una experiencia gastronómica inigualable a tus invitados.</p>
             </div>
-            <div className="glass-panel hover-scale">
-              <h3 style={{ color: 'var(--color-success)' }}>🍽️ Gastronomía Premium</h3>
-              <p>Ofrecemos los mejores menús y bufets para deleitar a tus asistentes, con opciones para todos los gustos.</p>
+            
+            <div className="card text-center hover-scale" style={{ padding: '3rem 2rem', border: '1px solid var(--color-accent)' }}>
+              <div style={{ fontSize: '2.5rem', marginBottom: '1.5rem', color: 'var(--color-gold)' }}>🌿</div>
+              <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', marginBottom: '1rem' }}>Jardines Exclusivos</h3>
+              <p style={{ color: 'var(--color-text-muted)' }}>Amplias áreas verdes con iluminación arquitectónica, perfectas para recepciones nocturnas al aire libre.</p>
             </div>
-            <div className="glass-panel hover-scale">
-              <h3 style={{ color: 'var(--color-accent)' }}>✨ Paquetes Todo Incluido</h3>
-              <p>Despreocúpate de la organización. Nosotros nos encargamos de las mesas, decoración, comida y entretenimiento.</p>
+            
+            <div className="card text-center hover-scale" style={{ padding: '3rem 2rem', border: '1px solid var(--color-accent)' }}>
+              <div style={{ fontSize: '2.5rem', marginBottom: '1.5rem', color: 'var(--color-gold)' }}>🥂</div>
+              <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', marginBottom: '1rem' }}>Atención Personalizada</h3>
+              <p style={{ color: 'var(--color-text-muted)' }}>Coordinadores de eventos dedicados para asegurar que tu día especial transcurra con absoluta perfección.</p>
             </div>
           </div>
         </div>

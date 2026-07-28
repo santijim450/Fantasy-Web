@@ -1,62 +1,72 @@
 function Mesas() {
-  const paquetes = [
-    {
-      id: 1,
-      titulo: 'Paquete Básico',
-      precio: 'Desde $5,000 MXN',
-      color: 'var(--color-secondary)',
-      caracteristicas: ['Renta del salón por 5 horas', 'Mesas y sillas para 50 personas', 'Mantelería básica', 'Música ambiental']
-    },
-    {
-      id: 2,
-      titulo: 'Paquete Premium',
-      precio: 'Desde $12,000 MXN',
-      color: 'var(--color-primary)',
-      caracteristicas: ['Renta por 6 horas', 'Mesas y sillas tiffany para 100 personas', 'Decoración con globos', 'Banquetes (2 tiempos)', 'Sonido profesional']
-    },
-    {
-      id: 3,
-      titulo: 'Paquete VIP',
-      precio: 'Desde $20,000 MXN',
-      color: 'var(--color-gold)',
-      caracteristicas: ['Renta por 7 horas', 'Decoración temática completa', 'Mesas imperiales', 'Banquetes (3 tiempos)', 'Animador y DJ', 'Pastel y mesa de dulces']
-    }
-  ];
-
   return (
     <div style={{ paddingTop: '80px' }}>
-      <section className="hero-base" style={{ minHeight: '40vh', backgroundImage: "url('https://images.unsplash.com/photo-1527529482837-4698179dc6ce?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80')" }}>
-        <div className="hero-content">
-          <h1 className="hero-title" style={{ fontSize: '3rem' }}>Paquetes y Mesas</h1>
-        </div>
+      {/* Header */}
+      <section className="section text-center" style={{ backgroundColor: 'var(--color-bg)', paddingBottom: '2rem' }}>
+        <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '3rem', color: 'var(--color-primary-dark)', marginBottom: '1rem' }}>Colecciones Exclusivas</h1>
+        <p style={{ color: 'var(--color-text-muted)', fontSize: '1.2rem', maxWidth: '700px', margin: '0 auto' }}>
+          Diseñamos experiencias a la medida. Elige la colección que mejor se adapte a la magnitud y elegancia de tu evento.
+        </p>
       </section>
 
-      <section className="section">
+      {/* Pricing Tables */}
+      <section className="section" style={{ paddingTop: '2rem' }}>
         <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-            <h2 style={{ fontSize: '2.5rem' }}>Selecciona tu Paquete Ideal</h2>
-            <p style={{ color: 'var(--color-text-muted)' }}>Nos adaptamos a tu presupuesto y necesidades para que tu fiesta sea perfecta.</p>
-          </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
-            {paquetes.map(paquete => (
-              <div key={paquete.id} className="glass-panel hover-scale" style={{ borderTop: `5px solid ${paquete.color}`, display: 'flex', flexDirection: 'column' }}>
-                <h3 style={{ color: paquete.color, fontSize: '1.75rem', marginBottom: '0.5rem' }}>{paquete.titulo}</h3>
-                <div style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '1.5rem', color: 'var(--color-dark)' }}>
-                  {paquete.precio}
-                </div>
-                <ul style={{ listStyle: 'none', padding: 0, flex: 1 }}>
-                  {paquete.caracteristicas.map((caracteristica, i) => (
-                    <li key={i} style={{ padding: '10px 0', borderBottom: '1px solid rgba(0,0,0,0.05)' }}>
-                      ✓ {caracteristica}
-                    </li>
-                  ))}
-                </ul>
-                <button className="btn btn-primary" style={{ marginTop: '2rem', width: '100%', backgroundColor: paquete.color, backgroundImage: 'none' }}>
-                  Cotizar ahora
-                </button>
+          <div className="grid" style={{ gap: '2rem' }}>
+            
+            {/* Paquete 1 */}
+            <div className="card text-center hover-scale" style={{ padding: '3rem 2rem', border: '1px solid var(--color-accent)' }}>
+              <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.8rem', color: 'var(--color-primary)' }}>Colección Plata</h3>
+              <p style={{ color: 'var(--color-text-muted)', margin: '1rem 0 2rem' }}>Íntimo y Sofisticado</p>
+              <div style={{ fontSize: '2.5rem', fontWeight: 'bold', color: 'var(--color-gold)', marginBottom: '2rem' }}>
+                $1,200<span style={{ fontSize: '1rem', color: 'var(--color-text-muted)' }}>/invitado</span>
               </div>
-            ))}
+              <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 2rem 0', textAlign: 'left', color: 'var(--color-text)' }}>
+                <li style={{ padding: '0.5rem 0', borderBottom: '1px solid var(--color-accent)' }}>✓ Menú a 3 tiempos</li>
+                <li style={{ padding: '0.5rem 0', borderBottom: '1px solid var(--color-accent)' }}>✓ Montaje clásico de lujo</li>
+                <li style={{ padding: '0.5rem 0', borderBottom: '1px solid var(--color-accent)' }}>✓ Centros de mesa florales</li>
+                <li style={{ padding: '0.5rem 0' }}>✓ Descorche libre</li>
+              </ul>
+              <button className="btn btn-outline" style={{ width: '100%' }}>Agendar Cita</button>
+            </div>
+
+            {/* Paquete 2 */}
+            <div className="card text-center hover-scale" style={{ padding: '3rem 2rem', background: 'var(--color-primary)', color: 'white', border: '1px solid var(--color-gold)' }}>
+              <div style={{ position: 'absolute', top: '-15px', left: '50%', transform: 'translateX(-50%)', background: 'var(--color-gold)', color: 'var(--color-primary-dark)', padding: '5px 15px', borderRadius: '20px', fontSize: '0.8rem', fontWeight: 'bold', textTransform: 'uppercase' }}>
+                Más Solicitada
+              </div>
+              <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.8rem', color: 'var(--color-accent)' }}>Colección Oro</h3>
+              <p style={{ color: 'rgba(255,255,255,0.8)', margin: '1rem 0 2rem' }}>La Experiencia Completa</p>
+              <div style={{ fontSize: '2.5rem', fontWeight: 'bold', color: 'var(--color-accent)', marginBottom: '2rem' }}>
+                $1,800<span style={{ fontSize: '1rem', color: 'rgba(255,255,255,0.8)' }}>/invitado</span>
+              </div>
+              <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 2rem 0', textAlign: 'left' }}>
+                <li style={{ padding: '0.5rem 0', borderBottom: '1px solid rgba(255,255,255,0.2)' }}>✓ Menú a 4 tiempos</li>
+                <li style={{ padding: '0.5rem 0', borderBottom: '1px solid rgba(255,255,255,0.2)' }}>✓ Montaje vintage o imperial</li>
+                <li style={{ padding: '0.5rem 0', borderBottom: '1px solid rgba(255,255,255,0.2)' }}>✓ Decoración floral premium</li>
+                <li style={{ padding: '0.5rem 0', borderBottom: '1px solid rgba(255,255,255,0.2)' }}>✓ Grupo musical versátil (5 hrs)</li>
+                <li style={{ padding: '0.5rem 0' }}>✓ Iluminación arquitectónica</li>
+              </ul>
+              <button className="btn btn-primary" style={{ width: '100%', background: 'var(--color-gold)', color: 'var(--color-primary-dark)', borderColor: 'var(--color-gold)' }}>Agendar Cita</button>
+            </div>
+
+            {/* Paquete 3 */}
+            <div className="card text-center hover-scale" style={{ padding: '3rem 2rem', border: '1px solid var(--color-accent)' }}>
+              <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.8rem', color: 'var(--color-primary)' }}>Colección Diamante</h3>
+              <p style={{ color: 'var(--color-text-muted)', margin: '1rem 0 2rem' }}>Lujo sin Concesiones</p>
+              <div style={{ fontSize: '2.5rem', fontWeight: 'bold', color: 'var(--color-gold)', marginBottom: '2rem' }}>
+                $2,500<span style={{ fontSize: '1rem', color: 'var(--color-text-muted)' }}>/invitado</span>
+              </div>
+              <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 2rem 0', textAlign: 'left', color: 'var(--color-text)' }}>
+                <li style={{ padding: '0.5rem 0', borderBottom: '1px solid var(--color-accent)' }}>✓ Menú de autor a 5 tiempos</li>
+                <li style={{ padding: '0.5rem 0', borderBottom: '1px solid var(--color-accent)' }}>✓ Barra internacional (Cocktails)</li>
+                <li style={{ padding: '0.5rem 0', borderBottom: '1px solid var(--color-accent)' }}>✓ Orquesta en vivo (6 hrs)</li>
+                <li style={{ padding: '0.5rem 0', borderBottom: '1px solid var(--color-accent)' }}>✓ Pista iluminada de cristal</li>
+                <li style={{ padding: '0.5rem 0' }}>✓ Wedding Planner asignado</li>
+              </ul>
+              <button className="btn btn-outline" style={{ width: '100%' }}>Agendar Cita</button>
+            </div>
+
           </div>
         </div>
       </section>
