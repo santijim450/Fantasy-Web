@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Montaje 3D - Salón Fantasy</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0a0a0a;
+            color: #fff;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        #canvas-container {
+            width: 100vw;
+            height: 100vh;
+            display: block;
+        }
+
+        .controls-panel {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(20, 20, 20, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            width: 320px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.8);
+            z-index: 10;
+        }
+
+        .controls-panel h2 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #d4af37; /* Dorado acorde al logo */
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+            color: #ccc;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            background: #2a2a2a;
+            border: 1px solid #444;
+            color: #fff;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .instructions {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #ddd;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body>
+
+    <div id="canvas-container"></div>
+
+    <div class="controls-panel">
+        <h2>Personaliza tu Evento</h2>
+
+        <div class="form-group">
+            <label>Color del Mantel Base (Fijo):</label>
+            <select disabled>
+                <option>Blanco Clásico</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="colorCubre">Color del Cubremantel:</label>
+            <select id="colorCubre">
+                <option value="#c8a2c8">Lila</option>
+                <option value="#568203">Verde aguacate</option>
+                <option value="#c2b280">Arena</option>
+                <option value="#d4af37">Dorado</option>
+                <option value="#ffff00">Amarillo</option>
+                <option value="#adff2f">Verde limón</option>
+                <option value="#ff0000">Rojo</option>
+                <option value="#800080">Morado</option>
+                <option value="#002366">Azul rey</option>
+                <option value="#89cff0">Azul bebé</option>
+                <option value="#40e0d0">Azul turquesa</option>
+                <option value="#ffa500">Naranja</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="tipoVajilla">Material de Vajilla:</label>
+            <select id="tipoVajilla">
+                <option value="melamina">Melamina (Plástico Mate)</option>
+                <option value="loza" selected>Loza (Plato Dorado + Cerámica)</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="instructions">
+        🖱️ Clic izquierdo + Arrastrar: Rotar vista | Rueda del mouse: Zoom
+    </div>
+
+    <script>
+        // --- 1. CONFIGURACIÓN DE ESCENA ---
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x050508); 
+        scene.fog = new THREE.FogExp2(0x050508, 0.015); 
+
+        const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 150);
+        camera.position.set(0, 15, 23); 
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        container.appendChild(renderer.domElement);
+
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.maxPolarAngle = Math.PI / 2 - 0.05; 
+
+        // --- 2. ILUMINACIÓN ---
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5); 
+        scene.add(ambientLight);
+
+        const centerLight = new THREE.PointLight(0xffeebb, 1.2, 50);
+        centerLight.position.set(0, 15, 0);
+        centerLight.castShadow = true;
+        scene.add(centerLight);
+
+        const dirLight = new THREE.DirectionalLight(0xffffff, 0.7);
+        dirLight.position.set(10, 20, 10);
+        scene.add(dirLight);
+
+        const textureLoader = new THREE.TextureLoader();
+
+        // --- 3. CONSTRUCCIÓN DEL SALÓN FANTASY ---
+        
+        // A. Pasto Artificial
+        const grassTexture = textureLoader.load('https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/terrain/grasslight-big.jpg');
+        grassTexture.wrapS = THREE.RepeatWrapping;
+        grassTexture.wrapT = THREE.RepeatWrapping;
+        grassTexture.repeat.set(15, 15); 
+
+        const floorGeo = new THREE.PlaneGeometry(60, 60);
+        const floorMat = new THREE.MeshStandardMaterial({ 
+            map: grassTexture, 
+            color: 0x55aa55, 
+            roughness: 1.0, 
+            metalness: 0.0 
+        }); 
+        const floor = new THREE.Mesh(floorGeo, floorMat);
+        floor.rotation.x = -Math.PI / 2;
+        floor.receiveShadow = true;
+        scene.add(floor);
+
+        // B. Pista de Baile LED
+        const danceFloorGroup = new THREE.Group();
+        const frameMat = new THREE.MeshStandardMaterial({ color: 0x222222, metalness: 0.8, roughness: 0.2 });
+        
+        const gridCols = 4; 
+        const gridRows = 7; 
+        const panelSize = 2; 
+        const totalWidth = gridCols * panelSize; 
+        const totalLength = gridRows * panelSize; 
+
+        const baseFloor = new THREE.Mesh(
+            new THREE.BoxGeometry(totalWidth + 0.2, 0.1, totalLength + 0.2),
+            new THREE.MeshStandardMaterial({ color: 0x111111, roughness: 0.8 })
+        );
+        baseFloor.position.y = 0.05;
+        danceFloorGroup.add(baseFloor);
+
+        const dotCountX = 40; 
+        const dotCountZ = 70; 
+        const totalDots = dotCountX * dotCountZ;
+
+        const ledGeometry = new THREE.BufferGeometry();
+        const ledPositions = new Float32Array(totalDots * 3);
+        const ledColors = new Float32Array(totalDots * 3);
+
+        let dotIndex = 0;
+        for(let i = 0; i < dotCountX; i++) {
+            for(let j = 0; j < dotCountZ; j++) {
+                const x = (i / (dotCountX - 1)) * totalWidth - (totalWidth / 2);
+                const z = (j / (dotCountZ - 1)) * totalLength - (totalLength / 2);
+                
+                ledPositions[dotIndex * 3] = x;
+                ledPositions[dotIndex * 3 + 1] = 0.11; 
+                ledPositions[dotIndex * 3 + 2] = z;
+
+                ledColors[dotIndex * 3] = 1;
+                ledColors[dotIndex * 3 + 1] = 1;
+                ledColors[dotIndex * 3 + 2] = 1;
+
+                dotIndex++;
+            }
+        }
+
+        ledGeometry.setAttribute('position', new THREE.BufferAttribute(ledPositions, 3));
+        ledGeometry.setAttribute('color', new THREE.BufferAttribute(ledColors, 3));
+
+        const ledMaterial = new THREE.PointsMaterial({
+            size: 0.08, 
+            vertexColors: true,
+            transparent: true,
+            opacity: 0.9,
+            blending: THREE.AdditiveBlending, 
+            depthWrite: false 
+        });
+
+        const ledPoints = new THREE.Points(ledGeometry, ledMaterial);
+        danceFloorGroup.add(ledPoints);
+
+        const glassMat = new THREE.MeshStandardMaterial({
+            color: 0x000000, 
+            transparent: true,
+            opacity: 0.3, 
+            roughness: 0.0, 
+            metalness: 0.8,
+            depthWrite: false 
+        });
+
+        for(let i = 0; i < gridCols; i++) {
+            for(let j = 0; j < gridRows; j++) {
+                const px = (i - gridCols/2) * panelSize + (panelSize/2);
+                const pz = (j - gridRows/2) * panelSize + (panelSize/2);
+
+                const glassPanel = new THREE.Mesh(
+                    new THREE.BoxGeometry(panelSize - 0.05, 0.05, panelSize - 0.05),
+                    glassMat
+                );
+                glassPanel.position.set(px, 0.14, pz); 
+                danceFloorGroup.add(glassPanel);
+            }
+        }
+        scene.add(danceFloorGroup);
+
+        // C. Paredes y Sistema Inteligente Anti-Negro
+        const wallGroup = new THREE.Group();
+        const brickMat = new THREE.MeshStandardMaterial({ color: 0x8B5A2B, roughness: 0.9 }); 
+        const foliageGreenMat = new THREE.MeshStandardMaterial({ color: 0x2d5a27, roughness: 1.0 }); 
+        const foliagePurpleMat = new THREE.MeshStandardMaterial({ color: 0x4a004a, roughness: 1.0 }); 
+
+        // Material de la imagen del muro (Oculto por defecto por si falla)
+        const wallTextureMat = new THREE.MeshStandardMaterial({ 
+            color: 0xffffff,
+            roughness: 0.9,
+            metalness: 0.1,
+            visible: false // Solo se mostrará si la foto "muro.jpg" carga bien
+        });
+
+        textureLoader.load('muro.jpg', function(texture) {
+            texture.wrapS = THREE.RepeatWrapping;
+            texture.wrapT = THREE.RepeatWrapping;
+            texture.repeat.set(4, 1);
+            wallTextureMat.map = texture;
+            wallTextureMat.visible = true; // La activamos
+            wallTextureMat.needsUpdate = true;
+        });
+
+        function createWall(x, z, rotY, width) {
+            const wall = new THREE.Group();
+            
+            // Ladrillo base
+            const base = new THREE.Mesh(new THREE.BoxGeometry(width, 3, 1), brickMat);
+            base.position.y = 1.5;
+            wall.add(base);
+
+            // 1. Muro de RESPALDO (Cuadros de colores por si bloquea la imagen)
+            const panelW = 4;
+            const cols = Math.floor(width / panelW);
+            for(let i = 0; i < cols; i++) {
+                for(let j = 0; j < 3; j++) {
+                    const isPurple = (i + j) % 2 === 0;
+                    const panel = new THREE.Mesh(new THREE.BoxGeometry(panelW, 4, 1.2), isPurple ? foliagePurpleMat : foliageGreenMat);
+                    panel.position.set((i * panelW) - (width/2) + (panelW/2), 5 + (j * 4), 0);
+                    wall.add(panel);
+                }
+            }
+
+            // 2. Muro con la IMAGEN (Cubre a los cuadros solo si la foto carga bien)
+            const photoWall = new THREE.Mesh(new THREE.BoxGeometry(width, 12, 1.25), wallTextureMat);
+            photoWall.position.set(0, 9, 0);
+            wall.add(photoWall);
+
+            wall.position.set(x, 0, z);
+            wall.rotation.y = rotY;
+            wallGroup.add(wall);
+        }
+
+        createWall(0, -25, 0, 50); 
+        createWall(-25, 0, Math.PI / 2, 50); 
+        createWall(25, 0, Math.PI / 2, 50); 
+        createWall(0, 25, Math.PI, 50); 
+        scene.add(wallGroup);
+
+        // D. Techo Drapeado
+        const roofMat = new THREE.MeshStandardMaterial({ color: 0xffffff, transparent: true, opacity: 0.8, side: THREE.DoubleSide });
+        const roofGeo = new THREE.ConeGeometry(35, 12, 8, 1, true); 
+        const roof = new THREE.Mesh(roofGeo, roofMat);
+        roof.position.y = 21; 
+        scene.add(roof);
+
+        // --- 4. MATERIALES Y GEOMETRÍAS COMPARTIDAS ---
+        const mantelBaseMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.9 });
+        const cubremantelMat = new THREE.MeshStandardMaterial({ color: 0xc8a2c8, roughness: 0.8 }); 
+        const vasoMat = new THREE.MeshPhysicalMaterial({ color: 0xffffff, transparent: true, opacity: 0.5, roughness: 0.1 });
+        const chairMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.3 }); 
+
+        // ----- SISTEMA DE VAJILLAS DUAL -----
+        
+        // 1. Set Melamina
+        const melaminaMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.8 });
+        const platoMelaminaGeo = new THREE.CylinderGeometry(0.20, 0.16, 0.02, 24); 
+        const tazonMelaminaGeo = new THREE.CylinderGeometry(0.12, 0.08, 0.06, 24); 
+        
+        // 2. Set Loza (Plato Procedural Ondulado con Material Inteligente)
+        const platoDoradoMat = new THREE.MeshStandardMaterial({ 
+            color: 0xd4af37, // Dorado de RESPALDO por si bloquea la foto
+            metalness: 0.7,  
+            roughness: 0.2   
+        });
+
+        // Intentamos cargar la textura de la foto real del plato
+        textureLoader.load('plato.jpg', function(texture) {
+            texture.wrapS = THREE.RepeatWrapping;
+            texture.wrapT = THREE.RepeatWrapping;
+            platoDoradoMat.map = texture;
+            platoDoradoMat.color.setHex(0xffffff); // Quitamos el dorado falso para mostrar los colores reales
+            platoDoradoMat.needsUpdate = true;
+        });
+
+        // Forma ondulada del plato matemáticamente
+        const shapePts = [];
+        const numScallops = 18; 
+        for (let i = 0; i <= 120; i++) {
+            const theta = (i / 120) * Math.PI * 2;
+            const radius = 0.26 + Math.sin(theta * numScallops) * 0.015;
+            shapePts.push(new THREE.Vector2(Math.cos(theta) * radius, Math.sin(theta) * radius));
+        }
+        const plateShape = new THREE.Shape(shapePts);
+        
+        const extrudeSettings = { depth: 0.015, bevelEnabled: true, bevelThickness: 0.01, bevelSize: 0.01, bevelSegments: 3 };
+        const platoDoradoGeo = new THREE.ExtrudeGeometry(plateShape, extrudeSettings);
+        platoDoradoGeo.rotateX(Math.PI / 2); 
+        platoDoradoGeo.translate(0, 0.01, 0); 
+
+        const ceramicaBlancaMat = new THREE.MeshPhysicalMaterial({ 
+            color: 0xffffff, metalness: 0.1, roughness: 0.1, clearcoat: 1.0, clearcoatRoughness: 0.1
+        });
+        const tazonCeramicaGeo = new THREE.CylinderGeometry(0.18, 0.14, 0.04, 32); 
+
+        // ------------------------------------
+
+        const mantelBaseGeo = new THREE.CylinderGeometry(1.8, 1.9, 1.4, 32);
+        const cubreGeo = new THREE.CylinderGeometry(1.82, 1.83, 0.2, 32);
+        const vasoGeo = new THREE.CylinderGeometry(0.05, 0.04, 0.14, 16);
+        
+        // Geometrías Silla
+        const tiffanySeatGeo = new THREE.BoxGeometry(0.42, 0.05, 0.42);
+        const tiffanyLegGeo = new THREE.CylinderGeometry(0.015, 0.015, 0.5, 8);
+        const tiffanyPostGeo = new THREE.CylinderGeometry(0.015, 0.015, 0.55, 8);
+        const tiffanyRailGeo = new THREE.CylinderGeometry(0.012, 0.012, 0.39, 8);
+        tiffanyRailGeo.rotateZ(Math.PI / 2); 
+        const tiffanySpindleGeo = new THREE.CylinderGeometry(0.008, 0.008, 0.38, 8);
+
+        // Materiales Jarrón
+        const jarronMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.1, metalness: 0.2 });
+        const follajeMat = new THREE.MeshStandardMaterial({ color: 0x2d6a4f, roughness: 0.9 });
+        const florMatRosa = new THREE.MeshStandardMaterial({ color: 0xff69b4, roughness: 0.7 });
+        const florMatBlanca = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.7 });
+        const florMatClara = new THREE.MeshStandardMaterial({ color: 0xffb6c1, roughness: 0.7 });
+
+        const jarronGeo = new THREE.CylinderGeometry(0.12, 0.16, 0.4, 32);
+        const follajeGeo = new THREE.SphereGeometry(0.24, 16, 16);
+        const florGeo = new THREE.DodecahedronGeometry(0.08, 1);
+
+        // --- 5. FUNCIÓN PARA CREAR MESAS ---
+        function crearMesa(x, z) {
+            const tableGroup = new THREE.Group();
+            tableGroup.position.set(x, 0, z);
+
+            const mantelBaseMesh = new THREE.Mesh(mantelBaseGeo, mantelBaseMat);
+            mantelBaseMesh.position.y = 0.7;
+            mantelBaseMesh.castShadow = true;
+            mantelBaseMesh.receiveShadow = true;
+            tableGroup.add(mantelBaseMesh);
+
+            const cubreMesh = new THREE.Mesh(cubreGeo, cubremantelMat);
+            cubreMesh.position.y = 1.35;
+            cubreMesh.castShadow = true;
+            tableGroup.add(cubreMesh);
+
+            const centroMesaGroup = new THREE.Group();
+            const jarron = new THREE.Mesh(jarronGeo, jarronMat);
+            jarron.position.y = 1.6; 
+            jarron.castShadow = true;
+            centroMesaGroup.add(jarron);
+
+            const follaje = new THREE.Mesh(follajeGeo, follajeMat);
+            follaje.position.y = 1.82;
+            follaje.scale.set(1, 0.6, 1); 
+            follaje.castShadow = true;
+            centroMesaGroup.add(follaje);
+
+            const matsFlores = [florMatRosa, florMatBlanca, florMatClara];
+            for (let f = 0; f < 10; f++) {
+                const florAleatoriaMat = matsFlores[Math.floor(Math.random() * matsFlores.length)];
+                const flor = new THREE.Mesh(florGeo, florAleatoriaMat);
+                const angle = (f / 10) * Math.PI * 2;
+                const radius = 0.18 + Math.random() * 0.04;
+                flor.position.set(Math.cos(angle) * radius, 1.85 + Math.random() * 0.1, Math.sin(angle) * radius);
+                flor.castShadow = true;
+                centroMesaGroup.add(flor);
+            }
+            
+            const florCentral = new THREE.Mesh(florGeo, florMatRosa);
+            florCentral.position.set(0, 2.0, 0);
+            florCentral.castShadow = true;
+            centroMesaGroup.add(florCentral);
+
+            tableGroup.add(centroMesaGroup);
+
+            const numServicios = 10;
+            const radioPlatos = 1.35;
+            const radioSillas = 2.3;
+
+            for (let i = 0; i < numServicios; i++) {
+                const angle = (i / numServicios) * Math.PI * 2;
+                const cx = Math.cos(angle);
+                const cz = Math.sin(angle);
+
+                const serviceGroup = new THREE.Group();
+                serviceGroup.position.set(cx * radioPlatos, 1.46, cz * radioPlatos);
+                serviceGroup.rotation.y = -angle + Math.PI / 2;
+                serviceGroup.name = "servicio_vajilla";
+
+                const platoBase = new THREE.Mesh(platoDoradoGeo, platoDoradoMat);
+                platoBase.name = "plato_inferior";
+                platoBase.castShadow = true;
+                serviceGroup.add(platoBase);
+
+                const tazon = new THREE.Mesh(tazonCeramicaGeo, ceramicaBlancaMat);
+                tazon.name = "plato_superior";
+                tazon.position.y = 0.03; 
+                tazon.castShadow = true;
+                serviceGroup.add(tazon);
+
+                const vaso = new THREE.Mesh(vasoGeo, vasoMat);
+                vaso.position.set(0.25, 0.07, -0.15); 
+                vaso.castShadow = true;
+                serviceGroup.add(vaso);
+
+                tableGroup.add(serviceGroup);
+
+                const chairGroup = new THREE.Group();
+                chairGroup.position.set(cx * radioSillas, 0, cz * radioSillas);
+                chairGroup.rotation.y = -angle - Math.PI / 2;
+
+                const seat = new THREE.Mesh(tiffanySeatGeo, chairMat);
+                seat.position.y = 0.5;
+                seat.castShadow = true;
+                chairGroup.add(seat);
+
+                for (let px of [-0.18, 0.18]) {
+                    for (let pz of [-0.18, 0.18]) {
+                        const leg = new THREE.Mesh(tiffanyLegGeo, chairMat);
+                        leg.position.set(px, 0.25, pz);
+                        leg.castShadow = true;
+                        chairGroup.add(leg);
+                    }
+                }
+
+                for (let px of [-0.18, 0.18]) {
+                    const post = new THREE.Mesh(tiffanyPostGeo, chairMat);
+                    post.position.set(px, 0.775, -0.18);
+                    post.castShadow = true;
+                    chairGroup.add(post);
+                }
+
+                for (let py of [0.65, 0.85, 1.03]) {
+                    const rail = new THREE.Mesh(tiffanyRailGeo, chairMat);
+                    rail.position.set(0, py, -0.18);
+                    rail.castShadow = true;
+                    chairGroup.add(rail);
+                }
+
+                for (let px of [-0.09, 0, 0.09]) {
+                    const spindle = new THREE.Mesh(tiffanySpindleGeo, chairMat);
+                    spindle.position.set(px, 0.84, -0.18);
+                    spindle.castShadow = true;
+                    chairGroup.add(spindle);
+                }
+                tableGroup.add(chairGroup);
+            }
+            scene.add(tableGroup);
+        }
+
+        // --- DISTRIBUCIÓN DE LAS 12 MESAS ---
+        crearMesa(-10, -8);
+        crearMesa(-11, 0);
+        crearMesa(-10, 8);
+        crearMesa(10, -8);
+        crearMesa(11, 0);
+        crearMesa(10, 8);
+        crearMesa(-5, -15);
+        crearMesa(0, -16);
+        crearMesa(5, -15);
+        crearMesa(-5, 15);
+        crearMesa(0, 16);
+        crearMesa(5, 15);
+
+        // --- 6. EVENTOS E INTERACCIÓN ---
+        document.getElementById('colorCubre').addEventListener('change', (e) => {
+            cubremantelMat.color.set(e.target.value);
+        });
+
+        document.getElementById('tipoVajilla').addEventListener('change', (e) => {
+            const tipoSeleccionado = e.target.value;
+            scene.traverse((child) => {
+                if (child.name === "servicio_vajilla") {
+                    const platoInferior = child.getObjectByName("plato_inferior");
+                    const platoSuperior = child.getObjectByName("plato_superior");
+
+                    if (tipoSeleccionado === 'melamina') {
+                        platoInferior.geometry = platoMelaminaGeo;
+                        platoInferior.material = melaminaMat;
+                        platoSuperior.geometry = tazonMelaminaGeo;
+                        platoSuperior.material = melaminaMat;
+                        platoSuperior.position.y = 0.04;
+                    } else if (tipoSeleccionado === 'loza') {
+                        platoInferior.geometry = platoDoradoGeo;
+                        platoInferior.material = platoDoradoMat;
+                        platoSuperior.geometry = tazonCeramicaGeo;
+                        platoSuperior.material = ceramicaBlancaMat;
+                        platoSuperior.position.y = 0.03;
+                    }
+                }
+            });
+        });
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // --- 7. ANIMACIÓN (Puntitos LED Arcoíris) ---
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+
+            const time = Date.now() * 0.002;
+            const colors = ledGeometry.attributes.color.array;
+            let colorIndex = 0;
+            const color = new THREE.Color();
+
+            for(let i = 0; i < dotCountX; i++) {
+                for(let j = 0; j < dotCountZ; j++) {
+                    let hue = ((i + j) * 0.02 - time * 0.2) % 1.0; 
+                    if(hue < 0) hue += 1.0; 
+                    color.setHSL(hue, 1.0, 0.6); 
+                    colors[colorIndex * 3] = color.r;
+                    colors[colorIndex * 3 + 1] = color.g;
+                    colors[colorIndex * 3 + 2] = color.b;
+                    colorIndex++;
+                }
+            }
+            ledGeometry.attributes.color.needsUpdate = true; 
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+</body>
+</html>

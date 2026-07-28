@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Montaje 3D - Salón Fantasy</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0a0a0a;
+            color: #fff;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        #canvas-container {
+            width: 100vw;
+            height: 100vh;
+            display: block;
+        }
+
+        .controls-panel {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(20, 20, 20, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            width: 320px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.8);
+            z-index: 10;
+        }
+
+        .controls-panel h2 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #d4af37;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+            color: #ccc;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            background: #2a2a2a;
+            border: 1px solid #444;
+            color: #fff;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .instructions {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #ddd;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body>
+
+    <div id="canvas-container"></div>
+
+    <div class="controls-panel">
+        <h2>Personaliza tu Evento</h2>
+
+        <div class="form-group">
+            <label>Color del Mantel Base (Fijo):</label>
+            <select disabled>
+                <option>Blanco Clásico</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="colorCubre">Color del Cubremantel:</label>
+            <select id="colorCubre">
+                <option value="#c8a2c8">Lila</option>
+                <option value="#568203">Verde aguacate</option>
+                <option value="#c2b280">Arena</option>
+                <option value="#d4af37">Dorado</option>
+                <option value="#ffff00">Amarillo</option>
+                <option value="#adff2f">Verde limón</option>
+                <option value="#ff0000">Rojo</option>
+                <option value="#800080">Morado</option>
+                <option value="#002366">Azul rey</option>
+                <option value="#89cff0">Azul bebé</option>
+                <option value="#40e0d0">Azul turquesa</option>
+                <option value="#ffa500">Naranja</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="tipoVajilla">Material de Vajilla:</label>
+            <select id="tipoVajilla">
+                <option value="melamina">Melamina (Plástico Mate)</option>
+                <option value="loza">Loza Ceramica (Brillante)</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="instructions">
+        🖱️ Clic izquierdo + Arrastrar: Rotar vista | Rueda del mouse: Zoom
+    </div>
+
+    <script>
+        // --- 1. CONFIGURACIÓN DE ESCENA ---
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x050508); 
+        scene.fog = new THREE.FogExp2(0x050508, 0.015); 
+
+        const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 150);
+        camera.position.set(0, 15, 30); 
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        container.appendChild(renderer.domElement);
+
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.maxPolarAngle = Math.PI / 2 - 0.05; 
+
+        // --- 2. ILUMINACIÓN ---
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.4); 
+        scene.add(ambientLight);
+
+        const centerLight = new THREE.PointLight(0xffeebb, 1.2, 50);
+        centerLight.position.set(0, 15, 0);
+        centerLight.castShadow = true;
+        scene.add(centerLight);
+
+        // --- 3. CONSTRUCCIÓN DEL SALÓN FANTASY ---
+        
+        // A. Pasto Sintético
+        const floorGeo = new THREE.PlaneGeometry(60, 60);
+        const floorMat = new THREE.MeshStandardMaterial({ color: 0x3a5a40, roughness: 1.0 }); 
+        const floor = new THREE.Mesh(floorGeo, floorMat);
+        floor.rotation.x = -Math.PI / 2;
+        floor.receiveShadow = true;
+        scene.add(floor);
+
+        // B. Pista de Baile LED (SOLUCIÓN EMISSIVE PARA EDGE)
+        const danceFloorGroup = new THREE.Group();
+        const frameMat = new THREE.MeshStandardMaterial({ color: 0x222222, metalness: 0.8, roughness: 0.2 });
+        
+        const gridCols = 4; 
+        const gridRows = 7; 
+        const panelSize = 2;
+        
+        const ledPanels = []; 
+
+        for(let i = 0; i < gridCols; i++) {
+            for(let j = 0; j < gridRows; j++) {
+                const px = (i - gridCols/2) * panelSize + (panelSize/2);
+                const pz = (j - gridRows/2) * panelSize + (panelSize/2);
+
+                // CREAMOS UN CRISTAL QUE EMITE LUZ PROPIA (Compatible con Edge)
+                const panelMat = new THREE.MeshStandardMaterial({
+                    color: 0x111111, // Color base oscuro
+                    emissive: 0x000000, // Aquí inyectaremos la animación LED
+                    emissiveIntensity: 1.5, // Brillo fuerte
+                    transparent: true,
+                    opacity: 0.85, // Efecto espejo semi-transparente
+                    roughness: 0.05,
+                    metalness: 0.9 // Reflejante
+                });
+
+                const glassPanel = new THREE.Mesh(new THREE.BoxGeometry(panelSize - 0.1, 0.1, panelSize - 0.1), panelMat);
+                glassPanel.position.set(px, 0.06, pz);
+                glassPanel.receiveShadow = true;
+                
+                // Guardamos coordenadas para animarlo
+                glassPanel.userData = { gridX: i, gridZ: j };
+                
+                danceFloorGroup.add(glassPanel);
+                ledPanels.push(glassPanel);
+            }
+        }
+        
+        const borderFloor = new THREE.Mesh(new THREE.BoxGeometry(gridCols*panelSize + 0.2, 0.12, gridRows*panelSize + 0.2), frameMat);
+        borderFloor.position.y = 0.05;
+        danceFloorGroup.add(borderFloor);
+        scene.add(danceFloorGroup);
+
+        // C. Paredes
+        const wallGroup = new THREE.Group();
+        const brickMat = new THREE.MeshStandardMaterial({ color: 0x8B5A2B, roughness: 0.9 }); 
+        const foliageGreenMat = new THREE.MeshStandardMaterial({ color: 0x2d5a27, roughness: 1.0 }); 
+        const foliagePurpleMat = new THREE.MeshStandardMaterial({ color: 0x4a004a, roughness: 1.0 }); 
+
+        function createWall(x, z, rotY, width) {
+            const wall = new THREE.Group();
+            
+            const base = new THREE.Mesh(new THREE.BoxGeometry(width, 3, 1), brickMat);
+            base.position.y = 1.5;
+            wall.add(base);
+
+            const panelW = 4;
+            const cols = Math.floor(width / panelW);
+            for(let i = 0; i < cols; i++) {
+                for(let j = 0; j < 3; j++) {
+                    const isPurple = (i + j) % 2 === 0;
+                    const panel = new THREE.Mesh(new THREE.BoxGeometry(panelW, 4, 1.2), isPurple ? foliagePurpleMat : foliageGreenMat);
+                    panel.position.set((i * panelW) - (width/2) + (panelW/2), 5 + (j * 4), 0);
+                    wall.add(panel);
+                }
+            }
+            wall.position.set(x, 0, z);
+            wall.rotation.y = rotY;
+            wallGroup.add(wall);
+        }
+
+        createWall(0, -25, 0, 50); 
+        createWall(-25, 0, Math.PI / 2, 50); 
+        createWall(25, 0, Math.PI / 2, 50); 
+        scene.add(wallGroup);
+
+        // D. Techo Drapeado
+        const roofMat = new THREE.MeshStandardMaterial({ color: 0xffffff, transparent: true, opacity: 0.8, side: THREE.DoubleSide });
+        const roofGeo = new THREE.ConeGeometry(35, 12, 8, 1, true); 
+        const roof = new THREE.Mesh(roofGeo, roofMat);
+        roof.position.y = 21; 
+        scene.add(roof);
+
+
+        // --- 4. MATERIALES Y GEOMETRÍAS ---
+        const mantelBaseMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.9 });
+        const cubremantelMat = new THREE.MeshStandardMaterial({ color: 0xc8a2c8, roughness: 0.8 }); 
+        
+        const lozaMatProps = { roughness: 0.1, metalness: 0.1, clearcoat: 1.0, clearcoatRoughness: 0.1 };
+        const melaminaMatProps = { roughness: 0.6, metalness: 0.0, clearcoat: 0.0 };
+        
+        const platoMat = new THREE.MeshPhysicalMaterial({ color: 0xffffff, ...melaminaMatProps });
+        const vasoMat = new THREE.MeshPhysicalMaterial({ color: 0xffffff, transparent: true, opacity: 0.5, roughness: 0.1 });
+        const chairMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.3 }); 
+        const potMat = new THREE.MeshStandardMaterial({ color: 0xaaaaaa, metalness: 0.8, roughness: 0.2 }); 
+        const plantMat = new THREE.MeshStandardMaterial({ color: 0x2d6a4f, roughness: 0.8 });
+
+        const mantelBaseGeo = new THREE.CylinderGeometry(1.8, 1.9, 1.4, 32);
+        const cubreGeo = new THREE.CylinderGeometry(1.82, 1.83, 0.2, 32);
+        const potGeo = new THREE.CylinderGeometry(0.3, 0.2, 0.4, 16);
+        const plantGeo = new THREE.SphereGeometry(0.4, 8, 8); 
+        const platoBaseGeo = new THREE.CylinderGeometry(0.22, 0.18, 0.02, 24);
+        const tazonGeo = new THREE.CylinderGeometry(0.13, 0.09, 0.06, 24);
+        const vasoGeo = new THREE.CylinderGeometry(0.05, 0.04, 0.14, 16);
+        
+        const tiffanySeatGeo = new THREE.BoxGeometry(0.42, 0.05, 0.42);
+        const tiffanyLegGeo = new THREE.CylinderGeometry(0.015, 0.015, 0.5, 8);
+        const tiffanyPostGeo = new THREE.CylinderGeometry(0.015, 0.015, 0.55, 8);
+        const tiffanyRailGeo = new THREE.CylinderGeometry(0.012, 0.012, 0.39, 8);
+        tiffanyRailGeo.rotateZ(Math.PI / 2); 
+        const tiffanySpindleGeo = new THREE.CylinderGeometry(0.008, 0.008, 0.38, 8);
+
+        // --- 5. FUNCIÓN PARA CREAR MESAS ---
+        function crearMesa(x, z) {
+            const tableGroup = new THREE.Group();
+            tableGroup.position.set(x, 0, z);
+
+            const mantelBaseMesh = new THREE.Mesh(mantelBaseGeo, mantelBaseMat);
+            mantelBaseMesh.position.y = 0.7;
+            mantelBaseMesh.castShadow = true;
+            mantelBaseMesh.receiveShadow = true;
+            tableGroup.add(mantelBaseMesh);
+
+            const cubreMesh = new THREE.Mesh(cubreGeo, cubremantelMat);
+            cubreMesh.position.y = 1.35;
+            cubreMesh.castShadow = true;
+            tableGroup.add(cubreMesh);
+
+            const pot = new THREE.Mesh(potGeo, potMat);
+            pot.position.set(0, 1.6, 0);
+            pot.castShadow = true;
+            tableGroup.add(pot);
+
+            const plant = new THREE.Mesh(plantGeo, plantMat);
+            plant.position.set(0, 1.9, 0);
+            plant.scale.set(1, 1.5, 1);
+            plant.castShadow = true;
+            tableGroup.add(plant);
+
+            const numServicios = 10;
+            const radioPlatos = 1.35;
+            const radioSillas = 2.3;
+
+            for (let i = 0; i < numServicios; i++) {
+                const angle = (i / numServicios) * Math.PI * 2;
+                const cx = Math.cos(angle);
+                const cz = Math.sin(angle);
+
+                const serviceGroup = new THREE.Group();
+                serviceGroup.position.set(cx * radioPlatos, 1.46, cz * radioPlatos);
+                serviceGroup.rotation.y = -angle + Math.PI / 2;
+
+                const platoBase = new THREE.Mesh(platoBaseGeo, platoMat);
+                platoBase.castShadow = true;
+                serviceGroup.add(platoBase);
+
+                const tazon = new THREE.Mesh(tazonGeo, platoMat);
+                tazon.position.y = 0.03;
+                tazon.castShadow = true;
+                serviceGroup.add(tazon);
+
+                const vaso = new THREE.Mesh(vasoGeo, vasoMat);
+                vaso.position.set(0.2, 0.07, -0.08);
+                vaso.castShadow = true;
+                serviceGroup.add(vaso);
+
+                tableGroup.add(serviceGroup);
+
+                const chairGroup = new THREE.Group();
+                chairGroup.position.set(cx * radioSillas, 0, cz * radioSillas);
+                chairGroup.rotation.y = -angle - Math.PI / 2;
+
+                const seat = new THREE.Mesh(tiffanySeatGeo, chairMat);
+                seat.position.y = 0.5;
+                seat.castShadow = true;
+                chairGroup.add(seat);
+
+                for (let px of [-0.18, 0.18]) {
+                    for (let pz of [-0.18, 0.18]) {
+                        const leg = new THREE.Mesh(tiffanyLegGeo, chairMat);
+                        leg.position.set(px, 0.25, pz);
+                        leg.castShadow = true;
+                        chairGroup.add(leg);
+                    }
+                }
+
+                for (let px of [-0.18, 0.18]) {
+                    const post = new THREE.Mesh(tiffanyPostGeo, chairMat);
+                    post.position.set(px, 0.775, -0.18);
+                    post.castShadow = true;
+                    chairGroup.add(post);
+                }
+
+                for (let py of [0.65, 0.85, 1.03]) {
+                    const rail = new THREE.Mesh(tiffanyRailGeo, chairMat);
+                    rail.position.set(0, py, -0.18);
+                    rail.castShadow = true;
+                    chairGroup.add(rail);
+                }
+
+                for (let px of [-0.09, 0, 0.09]) {
+                    const spindle = new THREE.Mesh(tiffanySpindleGeo, chairMat);
+                    spindle.position.set(px, 0.84, -0.18);
+                    spindle.castShadow = true;
+                    chairGroup.add(spindle);
+                }
+
+                tableGroup.add(chairGroup);
+            }
+            scene.add(tableGroup);
+        }
+
+        // --- DISTRIBUCIÓN DE LAS 12 MESAS ---
+        crearMesa(-10, -8);
+        crearMesa(-11, 0);
+        crearMesa(-10, 8);
+        crearMesa(10, -8);
+        crearMesa(11, 0);
+        crearMesa(10, 8);
+        crearMesa(-5, -15);
+        crearMesa(0, -16);
+        crearMesa(5, -15);
+        crearMesa(-5, 15);
+        crearMesa(0, 16);
+        crearMesa(5, 15);
+
+        // --- 6. EVENTOS E INTERACCIÓN ---
+        document.getElementById('colorCubre').addEventListener('change', (e) => {
+            cubremantelMat.color.set(e.target.value);
+        });
+
+        document.getElementById('tipoVajilla').addEventListener('change', (e) => {
+            const props = e.target.value === 'loza' ? lozaMatProps : melaminaMatProps;
+            platoMat.roughness = props.roughness;
+            platoMat.metalness = props.metalness;
+            platoMat.clearcoat = props.clearcoat;
+            platoMat.clearcoatRoughness = props.clearcoatRoughness;
+            platoMat.needsUpdate = true;
+        });
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // --- 7. ANIMACIÓN (Pista LED) ---
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+
+            // Animación directa sobre el brillo emisivo de cada cuadro
+            const time = Date.now() * 0.002; 
+            
+            ledPanels.forEach(panel => {
+                const x = panel.userData.gridX;
+                const z = panel.userData.gridZ;
+                
+                // Genera la onda de arcoíris en diagonal
+                let hue = ((x + z) * 0.15 - time) % 1.0; 
+                if(hue < 0) hue += 1.0; // Corrección para números negativos
+                
+                // Aplicamos el color directamente a la emisión de luz (Emissive)
+                panel.material.emissive.setHSL(hue, 1.0, 0.5);
+            });
+
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+</body>
+</html>
