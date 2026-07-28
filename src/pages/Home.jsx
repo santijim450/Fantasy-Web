@@ -14,8 +14,9 @@ function Home() {
           className="hero-video"
           poster="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80"
         >
-          {/* Video promocional del cliente */}
-          <source src="/promo.mov" type="video/mp4" />
+          {/* Video promocional convertido a MP4 para compatibilidad universal */}
+          <source src="/promo.mp4" type="video/mp4" />
+          <source src="/promo.mov" type="video/quicktime" />
           Tu navegador no soporta videos HTML5.
         </video>
 
