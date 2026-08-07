@@ -1,145 +1,115 @@
 import { Link } from 'react-router-dom';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/effect-fade';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper/modules';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 
 function Home() {
+  useScrollReveal();
+
   return (
     <div>
       {/* Hero Section */}
       <section className="hero-base">
-        {/* Background Video */}
         <video 
-          autoPlay 
-          loop 
-          muted 
-          playsInline 
+          autoPlay={true} 
+          loop={true} 
+          muted={true} 
+          playsInline={true} 
           className="hero-video"
           poster="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80"
         >
-          {/* Video promocional convertido a MP4 para compatibilidad universal */}
           <source src="/promo.mp4" type="video/mp4" />
           <source src="/promo.mov" type="video/quicktime" />
           Tu navegador no soporta videos HTML5.
         </video>
 
-        <div className="hero-content">
-          <h1 className="hero-title" style={{ fontSize: '4.5rem', fontFamily: 'var(--font-heading)', textTransform: 'uppercase', letterSpacing: '2px' }}>
-            Donde la Naturaleza y la Elegancia se Encuentran
+        <div className="container hero-content reveal">
+          <span className="subtitle-caps reveal reveal-delay-1" style={{ color: 'var(--color-surface)' }}>Jardín de Eventos</span>
+          <h1 className="title-hero">
+            Fantasy
           </h1>
-          <p className="hero-subtitle" style={{ fontSize: '1.2rem', fontWeight: '300', fontStyle: 'italic', letterSpacing: '1px' }}>
-            El escenario perfecto para bodas de ensueño, aniversarios y eventos de alto nivel en un jardín espectacular.
-          </p>
-          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
-            <Link to="/colecciones" className="btn btn-primary hover-scale">Explorar Colecciones</Link>
-            <Link to="/salon" className="btn btn-outline hover-scale">Conocer el Recinto</Link>
+          <div className="reveal reveal-delay-2" style={{ display: 'flex', gap: '2rem', justifyContent: 'center', marginTop: '2rem' }}>
+            <Link to="/salon" className="btn-minimal" style={{ color: 'var(--color-surface)', borderColor: 'var(--color-surface)' }}>Descubrir el Recinto</Link>
+            <Link to="/contacto" className="btn-minimal" style={{ color: 'var(--color-surface)', borderColor: 'var(--color-surface)' }}>Agendar Visita</Link>
           </div>
         </div>
       </section>
 
-      {/* Introducción / Bienvenidos */}
-      <section style={{ padding: '6rem 2rem', backgroundColor: 'var(--color-surface)' }}>
-        <div className="container text-center">
-          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '2.5rem', color: 'var(--color-primary-dark)', marginBottom: '1rem' }}>
-            Un Oasis de Lujo para tus Momentos Inolvidables
-          </h2>
-          <p style={{ color: 'var(--color-text)', fontSize: '1.2rem', maxWidth: '800px', margin: '0 auto', lineHeight: '1.8' }}>
-            Fantasy Jardín de Eventos no es solo un lugar, es el lienzo donde se pintan los mejores recuerdos de tu vida. Rodeado de naturaleza vibrante, arquitectura clásica y un servicio de guante blanco, transformamos tus celebraciones en experiencias verdaderamente magistrales.
+      {/* Intro Text */}
+      <section className="section bg-surface">
+        <div className="container text-center reveal">
+          <p className="text-intro">
+            "No es solo un lugar, es el lienzo donde se pintan los mejores recuerdos de tu vida."
           </p>
         </div>
       </section>
 
-      {/* Galería / Carrusel de Imágenes */}
-      <section style={{ padding: '6rem 2rem', backgroundColor: 'var(--color-bg)' }}>
-        <div className="container text-center">
-          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '2.5rem', marginBottom: '1rem', color: 'var(--color-primary-dark)' }}>
-            Descubre la Majestuosidad
-          </h2>
-          <p style={{ color: 'var(--color-text-muted)', marginBottom: '3rem', maxWidth: '600px', margin: '0 auto 4rem auto', fontSize: '1.1rem' }}>
-            Recorre nuestros exclusivos rincones diseñados para hacer de tu recepción una experiencia verdaderamente inolvidable.
-          </p>
-
-          <div style={{ paddingBottom: '2rem', maxWidth: '1000px', margin: '0 auto' }}>
-            <Swiper
-              modules={[Autoplay, EffectFade, Navigation, Pagination]}
-              effect={'fade'}
-              spaceBetween={30}
-              slidesPerView={1}
-              navigation
-              pagination={{ clickable: true }}
-              autoplay={{
-                delay: 4000,
-                disableOnInteraction: false,
-              }}
-              style={{
-                '--swiper-navigation-color': 'var(--color-gold)',
-                '--swiper-pagination-color': 'var(--color-gold)',
-                borderRadius: '8px',
-                boxShadow: 'var(--shadow-lg)'
-              }}
-            >
-              {[
-                "https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80",
-                "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80",
-                "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80",
-                "https://images.unsplash.com/photo-1523438885200-e635ba2c371e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80"
-              ].map((src, idx) => (
-                <SwiperSlide key={idx}>
-                  <img 
-                    src={src} 
-                    alt={`Vista del jardín ${idx + 1}`}
-                    style={{
-                      width: '100%',
-                      height: '60vh',
-                      minHeight: '450px',
-                      objectFit: 'cover',
-                      display: 'block'
-                    }}
-                  />
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
-        </div>
-      </section>
-
-      {/* Pilares de Excelencia (Teasers) */}
-      <section style={{ padding: '6rem 2rem', backgroundColor: 'var(--color-surface)' }}>
+      {/* Asymmetric Grid (Collections & Venue) */}
+      <section className="section">
         <div className="container">
-          <div className="text-center" style={{ marginBottom: '4rem' }}>
-            <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '2.5rem', color: 'var(--color-primary-dark)', marginBottom: '1rem' }}>Pilares de Excelencia</h2>
-            <p style={{ color: 'var(--color-text-muted)', maxWidth: '600px', margin: '0 auto', fontSize: '1.1rem' }}>
-              Cada detalle de nuestro jardín está pensado para deslumbrar.
-            </p>
+          <div className="grid-vivre">
+            
+            {/* Item 1 */}
+            <div className="grid-vivre-item reveal">
+              <div className="grid-vivre-img-container">
+                <Link to="/colecciones" className="img-wrap">
+                  <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" alt="Decoración de lujo" className="grid-vivre-img" />
+                </Link>
+              </div>
+              <div style={{ padding: '0 2rem' }}>
+                <span className="subtitle-caps">01 / Diseño</span>
+                <h3 className="title-massive" style={{ marginBottom: '1rem' }}>Colecciones</h3>
+                <p style={{ color: 'var(--color-text-muted)', marginBottom: '2rem', fontSize: '1.125rem' }}>
+                  Diseños a la medida que se adaptan a la magnitud de tus sueños. Cada arreglo florar y cada montaje está pensado para deslumbrar y contar una historia única.
+                </p>
+                <Link to="/colecciones" className="btn-minimal">Ver Colecciones</Link>
+              </div>
+            </div>
+
+            {/* Item 2 (Reversed) */}
+            <div className="grid-vivre-item reverse reveal">
+              <div className="grid-vivre-img-container">
+                <Link to="/salon" className="img-wrap">
+                  <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" alt="Recinto principal" className="grid-vivre-img" />
+                </Link>
+              </div>
+              <div style={{ padding: '0 2rem' }}>
+                <span className="subtitle-caps">02 / Arquitectura</span>
+                <h3 className="title-massive" style={{ marginBottom: '1rem' }}>El Recinto</h3>
+                <p style={{ color: 'var(--color-text-muted)', marginBottom: '2rem', fontSize: '1.125rem' }}>
+                  Espacios versátiles rodeados de naturaleza vibrante, perfectos tanto para ceremonias íntimas como para majestuosas recepciones al aire libre.
+                </p>
+                <Link to="/salon" className="btn-minimal">Conocer Más</Link>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* Services List */}
+      <section className="section bg-surface">
+        <div className="container">
+          <div className="reveal" style={{ marginBottom: '6rem' }}>
+            <span className="subtitle-caps">Filosofía</span>
+            <h2 className="title-massive">Nuestros Pilares</h2>
           </div>
           
-          <div className="grid" style={{ gap: '3rem' }}>
-            
-            <div className="card text-center hover-scale" style={{ padding: '3rem 2rem', border: '1px solid var(--color-accent)', display: 'flex', flexDirection: 'column' }}>
-              <div style={{ fontSize: '2.5rem', marginBottom: '1.5rem', color: 'var(--color-gold)' }}>🏛️</div>
-              <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', marginBottom: '1rem' }}>Espacios Versátiles</h3>
-              <p style={{ color: 'var(--color-text-muted)', flex: 1, marginBottom: '2rem' }}>Desde ceremonias íntimas hasta majestuosas recepciones al aire libre en nuestro espléndido jardín.</p>
-              <Link to="/salon" className="btn btn-outline hover-scale" style={{ alignSelf: 'center' }}>Ver Recinto</Link>
-            </div>
-            
-            <div className="card text-center hover-scale" style={{ padding: '3rem 2rem', border: '1px solid var(--color-accent)', display: 'flex', flexDirection: 'column' }}>
-              <div style={{ fontSize: '2.5rem', marginBottom: '1.5rem', color: 'var(--color-gold)' }}>🍽️</div>
-              <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', marginBottom: '1rem' }}>Alta Gastronomía</h3>
-              <p style={{ color: 'var(--color-text-muted)', flex: 1, marginBottom: '2rem' }}>Menús de autor, mixología y atención de primera clase para cautivar a los paladares más exigentes.</p>
-              <Link to="/servicios" className="btn btn-outline hover-scale" style={{ alignSelf: 'center' }}>Ver Servicios</Link>
-            </div>
-            
-            <div className="card text-center hover-scale" style={{ padding: '3rem 2rem', border: '1px solid var(--color-accent)', display: 'flex', flexDirection: 'column' }}>
-              <div style={{ fontSize: '2.5rem', marginBottom: '1.5rem', color: 'var(--color-gold)' }}>💎</div>
-              <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', marginBottom: '1rem' }}>Diseño a la Medida</h3>
-              <p style={{ color: 'var(--color-text-muted)', flex: 1, marginBottom: '2rem' }}>Colecciones exclusivas que se adaptan a la magnitud de tus sueños y necesidades.</p>
-              <Link to="/colecciones" className="btn btn-primary hover-scale" style={{ alignSelf: 'center' }}>Ver Colecciones</Link>
-            </div>
-            
-          </div>
+          <ul className="list-luxury reveal">
+            <li className="list-luxury-item">
+              <span className="list-luxury-num">01</span>
+              <h3 className="list-luxury-title">Alta Gastronomía</h3>
+              <Link to="/servicios" className="list-luxury-link">Explorar</Link>
+            </li>
+            <li className="list-luxury-item">
+              <span className="list-luxury-num">02</span>
+              <h3 className="list-luxury-title">Atención Premium</h3>
+              <Link to="/servicios" className="list-luxury-link">Explorar</Link>
+            </li>
+            <li className="list-luxury-item">
+              <span className="list-luxury-num">03</span>
+              <h3 className="list-luxury-title">Ubicación Privilegiada</h3>
+              <Link to="/contacto" className="list-luxury-link">Ubicación</Link>
+            </li>
+          </ul>
         </div>
       </section>
     </div>

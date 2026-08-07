@@ -4,74 +4,92 @@ function Servicios() {
   return (
     <div style={{ paddingTop: '80px', backgroundColor: 'var(--color-bg)' }}>
       {/* Header */}
-      <section className="section text-center" style={{ backgroundColor: 'var(--color-primary)', color: 'var(--color-accent)', padding: '6rem 2rem' }}>
-        <div className="container">
-          <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '3.5rem', marginBottom: '1rem', color: 'var(--color-gold)' }}>Nuestros Servicios</h1>
-          <p style={{ fontSize: '1.2rem', maxWidth: '700px', margin: '0 auto', fontStyle: 'italic', color: 'rgba(255,255,255,0.9)' }}>
+      <section className="hero-base" style={{ minHeight: '50vh', background: 'var(--color-surface)' }}>
+        <div className="hero-content reveal">
+          <span className="subtitle-caps">Experiencia</span>
+          <h1 className="title-massive">Nuestros Servicios</h1>
+          <p style={{ fontSize: '1.125rem', maxWidth: '600px', margin: '2rem auto 0', color: 'var(--color-text-muted)' }}>
             Atención al detalle en cada aspecto de tu celebración para garantizar un evento impecable.
           </p>
         </div>
       </section>
 
       {/* Servicios Detallados */}
-      <section className="section" style={{ padding: '6rem 2rem' }}>
+      <section className="section">
         <div className="container">
-          
-          {/* Banquetería */}
-          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '4rem', marginBottom: '6rem' }}>
-            <div style={{ flex: '1 1 400px' }}>
-              <img src="https://images.unsplash.com/photo-1555244162-803834f70033?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Banquete elegante" style={{ width: '100%', borderRadius: '4px', boxShadow: 'var(--shadow-lg)' }} />
+          <div className="grid-vivre">
+            
+            {/* Banquetería */}
+            <div className="grid-vivre-item reveal">
+              <div className="grid-vivre-img-container">
+                <div className="img-wrap">
+                  <img src="https://images.unsplash.com/photo-1555244162-803834f70033?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" alt="Banquete elegante" className="grid-vivre-img" />
+                </div>
+              </div>
+              <div style={{ padding: '0 2rem' }}>
+                <span className="subtitle-caps">01 / Gastronomía</span>
+                <h2 className="title-massive" style={{ marginBottom: '1rem', fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}>Alta Gastronomía</h2>
+                <p style={{ color: 'var(--color-text-muted)', marginBottom: '2rem', fontSize: '1.125rem' }}>
+                  El sabor de celebrar. Cada platillo es una experiencia diseñada para deleitar a tus invitados, con opciones que van desde menús formales hasta estaciones interactivas.
+                </p>
+                <ul className="list-luxury" style={{ marginTop: '2rem', padding: 0 }}>
+                  <li style={{ padding: '1rem 0', borderBottom: '1px solid rgba(0,0,0,0.1)' }}>
+                    <strong>Menú a Tiempos:</strong> Sopa Milpa, Pechuga Cordon Blue y variedad de salseados (BBQ, Nuez, Champiñón, Chipotle, 3 Chiles).
+                  </li>
+                  <li style={{ padding: '1rem 0', borderBottom: '1px solid rgba(0,0,0,0.1)' }}>
+                    <strong>Taquiza Tradicional:</strong> Más de 30 guisados a elegir (Pollo, Res, Cerdo y Vegetariano) con arroces y guarniciones clásicas.
+                  </li>
+                  <li style={{ padding: '1rem 0' }}>
+                    <strong>Parrillada al Momento:</strong> Cortes jugosos, choriqueso, alambres y fajitas asadas al instante para tus invitados.
+                  </li>
+                </ul>
+              </div>
             </div>
-            <div style={{ flex: '1 1 400px' }}>
-              <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '2.5rem', color: 'var(--color-primary-dark)', marginBottom: '1rem' }}>Alta Gastronomía</h2>
-              <p style={{ color: 'var(--color-text-muted)', fontSize: '1.1rem', marginBottom: '1.5rem', lineHeight: '1.8' }}>
-                Nuestra propuesta culinaria está diseñada por chefs de renombre. Ofrecemos menús de 3 a 5 tiempos, bufets internacionales, barras de postres artesanales y mixología de autor. Adaptamos cada platillo para crear una experiencia sensorial única para ti y tus invitados.
-              </p>
-              <ul style={{ color: 'var(--color-text)', listStyle: 'none', padding: 0 }}>
-                <li style={{ marginBottom: '0.5rem' }}>✨ Menús de degustación previos</li>
-                <li style={{ marginBottom: '0.5rem' }}>✨ Opciones veganas y sin gluten</li>
-                <li style={{ marginBottom: '0.5rem' }}>✨ Mixología y Coctelería de Bienvenida</li>
-              </ul>
-            </div>
-          </div>
 
-          {/* Decoración */}
-          <div style={{ display: 'flex', flexWrap: 'wrap-reverse', alignItems: 'center', gap: '4rem', marginBottom: '6rem' }}>
-            <div style={{ flex: '1 1 400px' }}>
-              <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '2.5rem', color: 'var(--color-primary-dark)', marginBottom: '1rem' }}>Diseño y Ambientación</h2>
-              <p style={{ color: 'var(--color-text-muted)', fontSize: '1.1rem', marginBottom: '1.5rem', lineHeight: '1.8' }}>
-                Transformamos el espacio para reflejar tu visión. Desde arreglos florales exóticos hasta mobiliario vintage o imperial. Nuestra iluminación arquitectónica resalta la majestuosidad del jardín, creando atmósferas románticas al caer la noche.
-              </p>
-              <ul style={{ color: 'var(--color-text)', listStyle: 'none', padding: 0 }}>
-                <li style={{ marginBottom: '0.5rem' }}>✨ Arte floral personalizado</li>
-                <li style={{ marginBottom: '0.5rem' }}>✨ Mobiliario de diseñador</li>
-                <li style={{ marginBottom: '0.5rem' }}>✨ Iluminación cálida y arquitectónica</li>
-              </ul>
+            {/* Decoración */}
+            <div className="grid-vivre-item reverse reveal">
+              <div className="grid-vivre-img-container">
+                <div className="img-wrap">
+                  <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" alt="Decoración floral" className="grid-vivre-img" />
+                </div>
+              </div>
+              <div style={{ padding: '0 2rem' }}>
+                <span className="subtitle-caps">02 / Ambientación</span>
+                <h2 className="title-massive" style={{ marginBottom: '1rem', fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}>Diseño y Estilo</h2>
+                <p style={{ color: 'var(--color-text-muted)', marginBottom: '2rem', fontSize: '1.125rem' }}>
+                  Transformamos el espacio para reflejar tu visión. Desde arreglos florales exóticos hasta mobiliario vintage o imperial. Nuestra iluminación arquitectónica resalta la majestuosidad del jardín, creando atmósferas románticas al caer la noche.
+                </p>
+                <ul className="list-luxury" style={{ marginTop: '2rem', padding: 0 }}>
+                  <li style={{ padding: '1rem 0', borderBottom: '1px solid rgba(0,0,0,0.1)' }}>Arte floral personalizado</li>
+                  <li style={{ padding: '1rem 0', borderBottom: '1px solid rgba(0,0,0,0.1)' }}>Mobiliario de diseñador</li>
+                  <li style={{ padding: '1rem 0' }}>Iluminación cálida y arquitectónica</li>
+                </ul>
+              </div>
             </div>
-            <div style={{ flex: '1 1 400px' }}>
-              <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Decoración floral" style={{ width: '100%', borderRadius: '4px', boxShadow: 'var(--shadow-lg)' }} />
-            </div>
-          </div>
 
-          {/* Entretenimiento */}
-          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '4rem' }}>
-            <div style={{ flex: '1 1 400px' }}>
-              <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Entretenimiento" style={{ width: '100%', borderRadius: '4px', boxShadow: 'var(--shadow-lg)' }} />
+            {/* Entretenimiento */}
+            <div className="grid-vivre-item reveal">
+              <div className="grid-vivre-img-container">
+                <div className="img-wrap">
+                  <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" alt="Entretenimiento" className="grid-vivre-img" />
+                </div>
+              </div>
+              <div style={{ padding: '0 2rem' }}>
+                <span className="subtitle-caps">03 / Experiencia</span>
+                <h2 className="title-massive" style={{ marginBottom: '1rem', fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}>Entretenimiento Premium</h2>
+                <p style={{ color: 'var(--color-text-muted)', marginBottom: '2rem', fontSize: '1.125rem' }}>
+                  El ambiente lo es todo. Contamos con alianzas con orquestas sinfónicas, grupos versátiles de alto impacto, DJs reconocidos y ensambles clásicos para ceremonias. Garantizamos una acústica perfecta y pistas de baile espectaculares.
+                </p>
+                <ul className="list-luxury" style={{ marginTop: '2rem', padding: 0, marginBottom: '3rem' }}>
+                  <li style={{ padding: '1rem 0', borderBottom: '1px solid rgba(0,0,0,0.1)' }}>Orquestas y música en vivo</li>
+                  <li style={{ padding: '1rem 0', borderBottom: '1px solid rgba(0,0,0,0.1)' }}>Pistas de baile iluminadas o de cristal</li>
+                  <li style={{ padding: '1rem 0' }}>Shows de pirotecnia en frío</li>
+                </ul>
+                <Link to="/colecciones" className="btn-minimal">Ver Colecciones</Link>
+              </div>
             </div>
-            <div style={{ flex: '1 1 400px' }}>
-              <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '2.5rem', color: 'var(--color-primary-dark)', marginBottom: '1rem' }}>Entretenimiento Premium</h2>
-              <p style={{ color: 'var(--color-text-muted)', fontSize: '1.1rem', marginBottom: '1.5rem', lineHeight: '1.8' }}>
-                El ambiente lo es todo. Contamos con alianzas con orquestas sinfónicas, grupos versátiles de alto impacto, DJs reconocidos y ensambles clásicos para ceremonias. Garantizamos una acústica perfecta y pistas de baile espectaculares.
-              </p>
-              <ul style={{ color: 'var(--color-text)', listStyle: 'none', padding: 0, marginBottom: '2rem' }}>
-                <li style={{ marginBottom: '0.5rem' }}>✨ Orquestas y música en vivo</li>
-                <li style={{ marginBottom: '0.5rem' }}>✨ Pistas de baile iluminadas o de cristal</li>
-                <li style={{ marginBottom: '0.5rem' }}>✨ Shows de pirotecnia en frío</li>
-              </ul>
-              <Link to="/colecciones" className="btn btn-primary hover-scale">Ver Nuestras Colecciones</Link>
-            </div>
-          </div>
 
+          </div>
         </div>
       </section>
     </div>

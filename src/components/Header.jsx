@@ -15,37 +15,46 @@ function Header() {
 
   return (
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
-      <div className="container navbar-container">
-        <Link to="/" className="navbar-logo hover-scale">
-          ✨ Fantasy
-        </Link>
-        <ul className="nav-links">
+      <div className="container" style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center' }}>
+        
+        {/* Left: Logo */}
+        <div style={{ justifySelf: 'start' }}>
+          <Link to="/" className="navbar-logo hover-scale" style={{ fontFamily: 'var(--font-serif)', color: 'inherit', textDecoration: 'none' }}>
+            Fantasy
+          </Link>
+        </div>
+
+        {/* Center: Links */}
+        <ul className="nav-links" style={{ display: 'flex', gap: '2rem', listStyle: 'none', margin: 0, padding: 0, justifySelf: 'center' }}>
           <li>
-            <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>
-              Inicio
+            <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+              <span className="hover-text-up" data-text="Inicio"><span>Inicio</span></span>
             </Link>
           </li>
           <li>
-            <Link to="/salon" className={`nav-link ${location.pathname === '/salon' ? 'active' : ''}`}>
-              El Recinto
+            <Link to="/salon" className={`nav-link ${location.pathname === '/salon' ? 'active' : ''}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+              <span className="hover-text-up" data-text="El Recinto"><span>El Recinto</span></span>
             </Link>
           </li>
           <li>
-            <Link to="/servicios" className={`nav-link ${location.pathname === '/servicios' ? 'active' : ''}`}>
-              Servicios
+            <Link to="/servicios" className={`nav-link ${location.pathname === '/servicios' ? 'active' : ''}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+              <span className="hover-text-up" data-text="Servicios"><span>Servicios</span></span>
             </Link>
           </li>
           <li>
-            <Link to="/colecciones" className={`nav-link ${location.pathname === '/colecciones' ? 'active' : ''}`}>
-              Colecciones
-            </Link>
-          </li>
-          <li>
-            <Link to="/contacto" className="btn btn-primary" style={{ padding: '8px 20px', marginLeft: '10px' }}>
-              Contacto
+            <Link to="/colecciones" className={`nav-link ${location.pathname === '/colecciones' ? 'active' : ''}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+              <span className="hover-text-up" data-text="Colecciones"><span>Colecciones</span></span>
             </Link>
           </li>
         </ul>
+
+        {/* Right: Button */}
+        <div style={{ justifySelf: 'end' }}>
+          <a href="https://wa.me/525536073700" target="_blank" rel="noopener noreferrer" className="btn-whatsapp-outline">
+            <span className="hover-text-up" data-text="Hablemos ↗"><span>Hablemos ↗</span></span>
+          </a>
+        </div>
+        
       </div>
     </nav>
   );

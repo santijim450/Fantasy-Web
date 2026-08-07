@@ -3,67 +3,77 @@ function Contacto() {
     <div style={{ paddingTop: '80px', backgroundColor: 'var(--color-bg)', minHeight: '100vh' }}>
       
       {/* Header */}
-      <section className="section text-center" style={{ backgroundColor: 'var(--color-primary-dark)', color: 'var(--color-accent)', padding: '5rem 2rem' }}>
-        <div className="container">
-          <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '3.5rem', color: 'var(--color-gold)', marginBottom: '1rem' }}>Contáctanos</h1>
-          <p style={{ fontSize: '1.2rem', maxWidth: '600px', margin: '0 auto', fontStyle: 'italic', color: 'rgba(255,255,255,0.8)' }}>
+      <section className="hero-base" style={{ minHeight: '40vh', background: 'var(--color-surface)' }}>
+        <div className="hero-content reveal">
+          <span className="subtitle-caps">Hablemos</span>
+          <h1 className="title-massive" style={{ color: 'var(--color-text)' }}>
+            Contáctanos
+          </h1>
+          <p style={{ color: 'var(--color-text-muted)', fontSize: '1.125rem', maxWidth: '600px', margin: '2rem auto 0' }}>
             Permítenos ser parte de tu historia. Agendemos una cita para conocer el recinto.
           </p>
         </div>
       </section>
 
       {/* Formulario e Información */}
-      <section className="section" style={{ padding: '5rem 2rem' }}>
+      <section className="section" style={{ paddingTop: '6rem' }}>
         <div className="container">
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4rem', background: 'white', padding: '4rem', borderRadius: '4px', boxShadow: 'var(--shadow-md)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '6rem', alignItems: 'flex-start' }}>
             
             {/* Información de Contacto */}
-            <div style={{ flex: '1 1 300px' }}>
-              <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '2rem', color: 'var(--color-primary)', marginBottom: '2rem' }}>Reserva tu Cita</h2>
+            <div className="reveal">
+              <span className="subtitle-caps">Información</span>
+              <h2 className="title-massive" style={{ fontSize: '3rem', marginBottom: '3rem' }}>Reserva tu Cita</h2>
               
               <div style={{ marginBottom: '2rem' }}>
-                <h4 style={{ color: 'var(--color-gold)', fontSize: '1.1rem', marginBottom: '0.5rem' }}>📍 Ubicación</h4>
-                <p style={{ color: 'var(--color-text)' }}>Calle Esmeralda 123, Jardines del Valle<br/>Ciudad Nezahualcóyotl, Estado de México</p>
+                <span className="subtitle-caps" style={{ color: 'var(--color-text)' }}>Ubicación</span>
+                <p style={{ color: 'var(--color-text-muted)', fontSize: '1.125rem', lineHeight: '1.5' }}>
+                  Calle, S. Rafael N. 254,<br/>
+                  Vicente Villada, 57710<br/>
+                  Cdad. Nezahualcóyotl, Méx.
+                </p>
               </div>
               
               <div style={{ marginBottom: '2rem' }}>
-                <h4 style={{ color: 'var(--color-gold)', fontSize: '1.1rem', marginBottom: '0.5rem' }}>📞 Teléfono / WhatsApp</h4>
-                <p style={{ color: 'var(--color-text)' }}>+52 (55) 1234-5678<br/>+52 (55) 8765-4321</p>
+                <span className="subtitle-caps" style={{ color: 'var(--color-text)' }}>Teléfono / WhatsApp</span>
+                <p style={{ color: 'var(--color-text-muted)', fontSize: '1.125rem' }}>
+                  <a href="https://wa.me/525536073700" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit' }}>+52 (55) 3607-3700</a>
+                </p>
               </div>
 
               <div style={{ marginBottom: '2rem' }}>
-                <h4 style={{ color: 'var(--color-gold)', fontSize: '1.1rem', marginBottom: '0.5rem' }}>✉️ Correo Electrónico</h4>
-                <p style={{ color: 'var(--color-text)' }}>eventos@fantasyjardin.com.mx</p>
+                <span className="subtitle-caps" style={{ color: 'var(--color-text)' }}>Correo Electrónico</span>
+                <p style={{ color: 'var(--color-text-muted)', fontSize: '1.125rem' }}>eventos@fantasyjardin.com.mx</p>
               </div>
 
               <div>
-                <h4 style={{ color: 'var(--color-gold)', fontSize: '1.1rem', marginBottom: '0.5rem' }}>🕒 Horario de Atención</h4>
-                <p style={{ color: 'var(--color-text)' }}>Lunes a Viernes: 10:00 am - 7:00 pm<br/>Sábados y Domingos: Previa cita</p>
+                <span className="subtitle-caps" style={{ color: 'var(--color-text)' }}>Horario de Atención</span>
+                <p style={{ color: 'var(--color-text-muted)', fontSize: '1.125rem' }}>Lunes a Viernes: 10:00 am - 7:00 pm<br/>Sábados y Domingos: Previa cita</p>
               </div>
             </div>
 
             {/* Formulario */}
-            <div style={{ flex: '1 1 400px' }}>
-              <form onSubmit={(e) => e.preventDefault()} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            <div className="reveal reveal-delay-1" style={{ background: 'var(--color-surface)', padding: '4rem', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(0,0,0,0.05)' }}>
+              <form onSubmit={(e) => e.preventDefault()} style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
                 <div>
-                  <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--color-text)' }}>Nombre Completo</label>
-                  <input type="text" placeholder="Tu nombre" style={{ width: '100%', padding: '12px', border: '1px solid #e2e8f0', borderRadius: '4px', outline: 'none' }} />
+                  <label style={{ display: 'block', marginBottom: '0.75rem', color: 'var(--color-text)', fontFamily: 'var(--font-sans)', fontSize: '0.875rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Nombre Completo</label>
+                  <input type="text" placeholder="Tu nombre" style={{ width: '100%', padding: '16px 0', border: 'none', borderBottom: '1px solid rgba(0,0,0,0.2)', backgroundColor: 'transparent', outline: 'none', fontSize: '1rem', fontFamily: 'var(--font-sans)', color: 'var(--color-text)' }} />
                 </div>
                 
-                <div style={{ display: 'flex', gap: '1.5rem' }}>
-                  <div style={{ flex: '1' }}>
-                    <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--color-text)' }}>Teléfono</label>
-                    <input type="tel" placeholder="Tu teléfono" style={{ width: '100%', padding: '12px', border: '1px solid #e2e8f0', borderRadius: '4px', outline: 'none' }} />
+                <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap' }}>
+                  <div style={{ flex: '1 1 200px' }}>
+                    <label style={{ display: 'block', marginBottom: '0.75rem', color: 'var(--color-text)', fontFamily: 'var(--font-sans)', fontSize: '0.875rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Teléfono</label>
+                    <input type="tel" placeholder="Tu teléfono" style={{ width: '100%', padding: '16px 0', border: 'none', borderBottom: '1px solid rgba(0,0,0,0.2)', backgroundColor: 'transparent', outline: 'none', fontSize: '1rem', fontFamily: 'var(--font-sans)', color: 'var(--color-text)' }} />
                   </div>
-                  <div style={{ flex: '1' }}>
-                    <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--color-text)' }}>Fecha del Evento</label>
-                    <input type="date" style={{ width: '100%', padding: '12px', border: '1px solid #e2e8f0', borderRadius: '4px', outline: 'none' }} />
+                  <div style={{ flex: '1 1 200px' }}>
+                    <label style={{ display: 'block', marginBottom: '0.75rem', color: 'var(--color-text)', fontFamily: 'var(--font-sans)', fontSize: '0.875rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Fecha del Evento</label>
+                    <input type="date" style={{ width: '100%', padding: '16px 0', border: 'none', borderBottom: '1px solid rgba(0,0,0,0.2)', backgroundColor: 'transparent', outline: 'none', fontSize: '1rem', fontFamily: 'var(--font-sans)', color: 'var(--color-text)' }} />
                   </div>
                 </div>
 
                 <div>
-                  <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--color-text)' }}>Tipo de Evento</label>
-                  <select style={{ width: '100%', padding: '12px', border: '1px solid #e2e8f0', borderRadius: '4px', outline: 'none' }}>
+                  <label style={{ display: 'block', marginBottom: '0.75rem', color: 'var(--color-text)', fontFamily: 'var(--font-sans)', fontSize: '0.875rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Tipo de Evento</label>
+                  <select style={{ width: '100%', padding: '16px 0', border: 'none', borderBottom: '1px solid rgba(0,0,0,0.2)', backgroundColor: 'transparent', outline: 'none', fontSize: '1rem', fontFamily: 'var(--font-sans)', color: 'var(--color-text)', cursor: 'pointer' }}>
                     <option>Boda</option>
                     <option>XV Años</option>
                     <option>Evento Corporativo</option>
@@ -73,11 +83,11 @@ function Contacto() {
                 </div>
 
                 <div>
-                  <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--color-text)' }}>Mensaje Adicional</label>
-                  <textarea rows="4" placeholder="¿Cómo podemos ayudarte a crear el evento perfecto?" style={{ width: '100%', padding: '12px', border: '1px solid #e2e8f0', borderRadius: '4px', outline: 'none', resize: 'none' }}></textarea>
+                  <label style={{ display: 'block', marginBottom: '0.75rem', color: 'var(--color-text)', fontFamily: 'var(--font-sans)', fontSize: '0.875rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Mensaje Adicional</label>
+                  <textarea rows="3" placeholder="¿Cómo podemos ayudarte a crear el evento perfecto?" style={{ width: '100%', padding: '16px 0', border: 'none', borderBottom: '1px solid rgba(0,0,0,0.2)', backgroundColor: 'transparent', outline: 'none', fontSize: '1rem', fontFamily: 'var(--font-sans)', color: 'var(--color-text)', resize: 'none' }}></textarea>
                 </div>
 
-                <button type="submit" className="btn btn-primary hover-scale" style={{ alignSelf: 'flex-start', marginTop: '1rem' }}>Enviar Solicitud</button>
+                <button type="submit" className="view-all-container" style={{ alignSelf: 'flex-start', marginTop: '1rem', cursor: 'pointer', background: 'none', border: 'none', borderBottom: '1px solid var(--color-text)', paddingBottom: '4px' }}>Enviar Solicitud <span className="view-all__arrow">↗</span></button>
               </form>
             </div>
 

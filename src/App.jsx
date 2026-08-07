@@ -6,10 +6,12 @@ import Salon from './pages/Salon';
 import Mesas from './pages/Mesas';
 import Servicios from './pages/Servicios';
 import Contacto from './pages/Contacto';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <Header />
         <main className="main-content">
           <Routes>
